@@ -80,13 +80,16 @@
    vagrant plugin install vagrant-disksize
    ```
 
-## 3. 启动虚拟机
+## 4. 启动虚拟机
 
+     参见各虚拟机子目录下的README.md。
+     
+     各虚拟机目录结构如下所示：
      ```shell
      /virtualbox
      ├── boxes     # Vagrant box的构建目录
-     ├── builder1  # Jenkins虚拟机
-     │   └── up.sh # Jenkins虚拟机的启动脚本，其他虚拟机类似，下面不再重复
+     ├── builder1  # Jenkins CI/CD虚拟机
+     │   └── up.sh # Jenkins CI/CD虚拟机的启动脚本，其他虚拟机类似，下面不再重复
      ├── etc_hosts # 所有虚拟机的ip列表。构建Vagrant box的过程中生成
      ├── k8s_node1 # K8S Master
      ├── k8s_node2 # K8S Worker 1
@@ -96,7 +99,10 @@
      ├── store4    # Harbor Docker Registry
      ```
 
-## 5. 可选：构建各虚拟机用的Vagrant Box
+## 5. 管理Jenkins
+   [./jenkins/README.md](./jenkins/README.md)
+
+## 6. 可选：构建各虚拟机用的Vagrant Box
 
    Vagrant Box是给Vagrant针对VirtualBox镜像做的打包格式，以`.box`作为文件扩展名。
    构建过程比较耗时，所以启动脚本已经配置为从https://download.engineer365.org:40443/vagrant/box/下载到我们已经构建好的box文件。
