@@ -1,4 +1,4 @@
 # 管理Jenkins
 
-- ### 创建Jenkins Multibranch PR Job
-  [./create_job.md](./create_job.md)
+- ### 创建创建Jenkins Multibranch Github PR Job
+  [./create_github_pr_job.md](./create_github_pr_job.md)
