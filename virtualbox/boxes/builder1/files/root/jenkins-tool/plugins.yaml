@@ -128,7 +128,7 @@ plugins:
       version: 1.45.3
  - artifactId: git
    source:
-      version: 4.5.0
+      version: 4.5.1
  - artifactId: git-parameter
    source:
       version: 0.9.13
