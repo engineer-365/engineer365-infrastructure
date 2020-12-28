@@ -190,17 +190,23 @@
   VAGRANT_DEB=vagrant_2.2.14_x86_64.deb
   wget "https://download.engineer365.org:40443/vagrant/${VAGRANT_DEB}"
   sudo dpkg -i ${VAGRANT_DEB}
+  ```
+  #### 2.3 安装Vagrant插件
 
-  # 我们用到了Vagrant的“disks”功能，是vagrant的实验特性，所以需要设置VAGRANT_EXPERIMENTAL环境变量来启用
+   - 我们用到了Vagrant的“disks”功能，是vagrant的实验特性，所以需要设置VAGRANT_EXPERIMENTAL环境变量来启用
+   ```shell
   sudo echo 'export VAGRANT_EXPERIMENTAL="disks"' >> /etc/profile
   source /etc/profile
+   ```
 
-  # vagrant-vbguest(0.28.0)是一个vagrant插件，用于安装VirtualBox Guest扩展
+  - vagrant-vbguest(0.28.0)是一个vagrant插件，用于安装VirtualBox Guest扩展
+  ```shell
   vagrant plugin install vagrant-vbguest
+  ```
 
-  # vagrant-disksize (0.1.3)是一个vagrant插件，用于修改虚拟机的磁盘大小（缺省大小仅10G）
+  - vagrant-disksize (0.1.3)是一个vagrant插件，用于修改虚拟机的磁盘大小（缺省大小仅10G）
+  ```shell
   vagrant plugin install vagrant-disksize
-  
   ```
 
   ### 3. 启动虚拟机
