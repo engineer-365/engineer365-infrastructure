@@ -143,12 +143,12 @@
       
   ### 2. 准备工作 - 安装Vagrant和VirtualBox
 
-  #### 2.1 安装VirtualBox (6.1.14)
+  #### 2.1 安装VirtualBox (6.1.16)
   
   VirtualBox的安装包可以在下列服务器下载：
-  - 官网：https://www.virtualbox.org/wiki/Download_Old_Builds_6_1
-  - 清华大学镜像：https://mirrors.tuna.tsinghua.edu.cn/virtualbox/
-  - engineer365的下载站：https://download.engineer365.org:40443/virtualbox/
+  - 官网：https://download.virtualbox.org/virtualbox/6.1.16
+  - 清华大学镜像：https://mirrors.tuna.tsinghua.edu.cn/virtualbox/6.1.16
+  - engineer365的下载站：https://download.engineer365.org:40443/virtualbox/6.1.16
 
   各个操作系统都有对应的GUI安装包。
   
@@ -164,8 +164,8 @@
   sudo apt-get install -y linux-headers-$(uname -r) build-essential gcc make python zip cmake uuid tree jq
 
   # 下载安装包
-  VIRTUALBOX_DEB=virtualbox-6.1_6.1.14-140239_Ubuntu_$(lsb_release -cs)_amd64.deb
-  wget "https://download.engineer365.org:40443/virtualbox/${VIRTUALBOX_DEB}"
+  VIRTUALBOX_DEB=virtualbox-6.1_6.1.16-140961~Ubuntu~$(lsb_release -cs)_amd64.deb
+  wget "https://download.engineer365.org:40443/virtualbox/6.1.16/${VIRTUALBOX_DEB}"
   sudo dpkg -i ${VIRTUALBOX_DEB}
   sudo apt --fix-broken install
 
