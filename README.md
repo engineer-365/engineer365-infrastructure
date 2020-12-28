@@ -163,6 +163,7 @@
   sudo apt-get install -y linux-headers-$(uname -r) build-essential gcc make python zip cmake uuid tree jq
 
   # 下载安装包
+  VIRTUALBOX_DEB=virtualbox-6.1_6.1.14-140239_Ubuntu_$(lsb_release -cs)_amd64.deb
   wget "https://download.engineer365.org:40443/virtualbox/${VIRTUALBOX_DEB}"
   sudo dpkg -i ${VIRTUALBOX_DEB}
   sudo apt --fix-broken install
