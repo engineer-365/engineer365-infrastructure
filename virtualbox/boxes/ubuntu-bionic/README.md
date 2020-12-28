@@ -11,7 +11,7 @@
     ```shell
     BOX_NAME="ubuntu-bionic-20201201"
     BOX_FILE="${BOX_NAME}.box"
-    wget --quiet https://download.engineer365.org:40443/vagrant/box/hashicorp/${BOX_FILE}
+    wget https://download.engineer365.org:40443/vagrant/box/hashicorp/${BOX_FILE}
     vagrant box add ${BOX_FILE} --name ${BOX_NAME} --force
     ```
 

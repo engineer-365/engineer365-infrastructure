@@ -157,7 +157,8 @@
   ```shell
   # 设置timezone
   TIMEZONE="Asia/Shanghai"
-  sudo ln -sf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} > /etc/timezone
+  sudo ln -sf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
+  sudo echo ${TIMEZONE} > /etc/timezone
 
   # 安装一些相关工具
   sudo apt-get install -y linux-headers-$(uname -r) build-essential gcc make python zip cmake uuid tree jq
@@ -196,10 +197,10 @@
 
   # vagrant-vbguest(0.28.0)是一个vagrant插件，用于安装VirtualBox Guest扩展
   vagrant plugin install vagrant-vbguest
-  # Installed the plugin 'vagrant-vbguest (0.28.0)'!
 
   # vagrant-disksize (0.1.3)是一个vagrant插件，用于修改虚拟机的磁盘大小（缺省大小仅10G）
   vagrant plugin install vagrant-disksize
+  
   ```
 
   ### 3. 启动虚拟机
@@ -289,5 +290,5 @@
 ### 6. Vagrant + Bash script + VirtualBox这个组合显然不会用于实际环境，会换掉吗？
   第一阶段使用这个组合是因为个人开发环境下使用方便，后续阶段里，在测试环境和生产环境里是会被替换掉的，但是在个人开发环境中，这个组合会一直使用下去。
 
-### 6. 大部分软件包都需要从国外网站下载，是不是会很慢，甚至下载不下来？
+### 7. 大部分软件包都需要从国外网站下载，是不是会很慢，甚至下载不下来？
   我们的构建工具/脚本会尽可能从国内镜像下载，譬如Ubuntu server和Jenkins的plugin都是从清华大学的镜像站下载。对于那些还没找到镜像的包，譬如Ubuntu 18的Vagrant box，我们已经下载好了，可以在[https://download.engineer365.org:40443/](https://download.engineer365.org:40443)找到。
