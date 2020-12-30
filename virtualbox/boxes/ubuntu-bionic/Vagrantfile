@@ -66,6 +66,9 @@ Vagrant.configure("2") do |config|
     p.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
     #p.customize ["storagectl", :id, "--name", "SATA Controller", "--add", "sata", "--controller", "IntelAHCI"]  
     
+    # fix for https://github.com/engineer-365/engineer365-infrastructure/issues/3
+    p.customize [ "modifyvm", :id, "--uartmode1", "file", "./uartmode1.log"]
+
     # Customize the amount of memory on the VM:
     p.memory = "4096"
     p.cpus = 2
