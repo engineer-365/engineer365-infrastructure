@@ -38,19 +38,23 @@ function up_vm() {
 }
 
 function import_raw_box() {
-    local org_name=$1    
+    local org_name=$1
     local box_name=$2
     local box_name_fq="${org_name}/${box_name}"
-    
+
     vagrant box list | grep "${box_name_fq}" | wc -l > ${box_name}.box.counter
     if [ "$(cat ${box_name}.box.counter)" != '1' ]; then
+        echo "${box_name_fq} not found, importing ..."
+        
         local box_file="${box_name}.box"
         rm -f ${box_file}
-        
+
         wget --quiet "${box_download_path}/${org_name}/${box_file}"
-        
+
         vagrant box add ${box_file} --name "${box_name_fq}" --force
         rm ${box_file}
+    else
+        echo "${box_name_fq} exists already"
     fi
 
     rm ${box_name}.box.counter
@@ -81,11 +85,11 @@ function build_box() {
     vagrant destroy --force
     rm -rf ${this_dir}/.vagrant
 
-    # uncomment below code, change the 'upload_site_for_scp', if you want to 
-    # upload boxes somewhere
-    
-    #scp -P 30022 ${this_dir}/${box_file} ${upload_site_for_scp}/vagrant/box/${org}
-    #rm -f ${this_dir}/${box_file}
+    ## uncomment below code, change the 'upload_site_for_scp', if you want to
+    ## upload boxes somewhere
+
+    scp -P 30022 ${this_dir}/${box_file} ${upload_site_for_scp}/vagrant/box/${org}
+    rm -f ${this_dir}/${box_file}
 }
 
 
