@@ -298,23 +298,4 @@
 
 ### 7. 大部分软件包都需要从国外网站下载，是不是会很慢，甚至下载不下来？
   我们的构建工具/脚本会尽可能从国内镜像下载，譬如Ubuntu server和Jenkins的plugin都是从清华大学的镜像站下载。对于那些还没找到镜像的包，譬如Ubuntu 18的Vagrant box，我们已经下载好了，可以在[https://download.engineer365.org:40443/](https://download.engineer365.org:40443)找到。
-
-### 8. 出错：/home/qiangyt/engineer365/repos/engineer365-infrastructure/virtualbox/boxes/ubuntu-bionic/ubuntu-bionic-18.04-cloudimg-console.log (VERR_FILE_NOT_FOUND)
-
-  出现以下报错时是已知Issue #3 (https://github.com/engineer-365/engineer365-infrastructure/issues/3)。
-
-  ```shell
-  There was an error while executing `VBoxManage`, a CLI used by Vagrant
-  for controlling VirtualBox. The command and stderr is shown below.
-
-  Command: ["startvm", "bed3796d-9c02-453d-a0e9-0022a8cabc70", "--type", "headless"]
-
-  Stderr: VBoxManage: error: RawFile#0 failed to create the raw output file /home/qiangyt/engineer365/repos/engineer365-infrastructure/virtualbox/boxes/ubuntu-bionic/ubuntu-bionic-18.04-cloudimg-console.log (VERR_FILE_NOT_FOUND)
-  VBoxManage: error: Details: code NS_ERROR_FAILURE (0x80004005), component ConsoleWrap, interface IConsole
-  ```
-
-  原因是我们预先构建的Vagrant box里依赖于基础镜像的一个目录，目前还没找到解决办法，workaround是建立一个空目录：
-
-  ```sudo mkdir -p /home/qiangyt/engineer365/repos/engineer365-infrastructure/virtualbox/boxes/ubuntu-bionic/```
-
-  然后```vagrant destroy```，并重新执行。
+  
