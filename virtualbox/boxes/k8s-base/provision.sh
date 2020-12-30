@@ -133,7 +133,7 @@ localAPIEndpoint:
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
-kubernetesVersion: v1.20.0
+kubernetesVersion: v1.20.1
 controlPlaneEndpoint: k8s-master1.engineer365.org:6443
 networking:
   dnsDomain: cluster.local
@@ -145,15 +145,17 @@ kubeadm config images list --config=kubeadm-config.yaml
 kubeadm config images pull --config=kubeadm-config.yaml
 
 # pull calico images
+
+# for calico 3.17.1
 docker pull --quiet calico/pod2daemon-flexvol:v3.17.1
 docker pull --quiet calico/cni:v3.17.1
 docker pull --quiet calico/node:v3.17.1
 docker pull --quiet calico/kube-controllers:v3.17.1
 docker pull --quiet calico/typha:v3.17.1
 
-
-docker pull --quiet calico/pod2daemon-flexvol:v3.10.2
-docker pull --quiet calico/cni:v3.10.2
-docker pull --quiet calico/node:v3.10.2
-docker pull --quiet calico/kube-controllers:v3.10.2
-docker pull --quiet calico/typha:v3.10.2
+# for calico 3.10.2
+# docker pull --quiet calico/pod2daemon-flexvol:v3.10.2
+# docker pull --quiet calico/cni:v3.10.2
+# docker pull --quiet calico/node:v3.10.2
+# docker pull --quiet calico/kube-controllers:v3.10.2
+# docker pull --quiet calico/typha:v3.10.2
