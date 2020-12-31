@@ -26,7 +26,7 @@
 set -e
 set -x
 
-mv /home/vagrant/files/opt /
+cp -r /home/vagrant/files/opt/* /opt/
 cd /opt/
 
 docker-compose up -d --remove-orphans
