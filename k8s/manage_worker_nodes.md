@@ -41,6 +41,12 @@
    openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
    ```
 
+   最后，添加完以后，删除token
+
+   ```shell
+   kubeadm token delete <token>
+   ```
+
 - ## 删除worker节点
 
    删除一个节点前，需要先drain上面的pod
