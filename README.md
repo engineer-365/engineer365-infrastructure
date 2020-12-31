@@ -195,7 +195,10 @@
 
     另外，包括Windows和Mac在内，都需要把`192.168.50.151 k8s-master1.engineer365.org`加入/etc/hosts：
     ```shell
-    echo "192.168.50.151 k8s-master1.engineer365.org" >> /etc/hosts
+    echo "192.168.50.151    k8s-master1.engineer365.org" >> /etc/hosts
+    echo "192.168.50.171    k8s-node1.engineer365.org" >> /etc/hosts
+    echo "192.168.50.172    k8s-node2.engineer365.org" >> /etc/hosts
+    echo "192.168.50.173    k8s-node3.engineer365.org" >> /etc/hosts
     ```
 
   ### 3. 启动虚拟机
