@@ -63,3 +63,6 @@ sleep 60
 kubectl get pods -n kube-system
 
 # then run `vagrant ssh -c "sudo kubeadm token create --print-join-command"` to get join command
+
+# kubectl apply -f /home/vagrant/files/nginx-ingress.yaml
+# then configure the domain name 'fleashop.engineer365.org' to the host machine, will got 404 error which is expected
