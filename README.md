@@ -199,6 +199,8 @@
     echo "192.168.50.171    k8s-node1.engineer365.org" >> /etc/hosts
     echo "192.168.50.172    k8s-node2.engineer365.org" >> /etc/hosts
     echo "192.168.50.173    k8s-node3.engineer365.org" >> /etc/hosts
+    echo "192.168.50.174    k8s-node4.engineer365.org" >> /etc/hosts
+    echo "192.168.50.175    k8s-node5.engineer365.org" >> /etc/hosts
     ```
 
   ### 3. 启动虚拟机
