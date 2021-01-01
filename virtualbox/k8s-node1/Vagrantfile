@@ -32,7 +32,7 @@ puts "org: #{org}"
 vm_name=ENV["k8s_node1_host"]
 puts "vm name: #{vm_name}"
 
-box_name=ENV["box_name____org_k8s_node1"]
+box_name=ENV["box_name____org_k8s_base"]
 box_name_fq="#{org}/#{box_name}"
 puts "base box: #{box_name_fq}"
 
@@ -45,7 +45,8 @@ puts "Vagrantfile variables ---------------------------------------------------"
 Vagrant.configure("2") do |config|
 
   config.vm.box = box_name_fq
-  config.vm.network "private_network", ip: ip
+  config.vm.hostname = vm_name
+  config.vm.network "private_network", ip: ip, hostname: true
   
   config.vm.provider "virtualbox" do |p|
      p.name = vm_name

@@ -29,14 +29,14 @@ puts "Vagrantfile variables ---------------------------------------------------"
 org=ENV["org"]
 puts "org: #{org}"
 
-vm_name=ENV["k8s_node1_host"]
+vm_name=ENV["k8s_master1_host"]
 puts "vm name: #{vm_name}"
 
-base_box_name=ENV["box_name____org_ubuntu18"]
-base_box_name_fq="#{org}/#{base_box_name}"
-puts "base box: #{base_box_name_fq}"
+box_name=ENV["box_name____org_k8s_master1"]
+box_name_fq="#{org}/#{box_name}"
+puts "base box: #{box_name_fq}"
 
-ip=ENV["k8s_node1_ip"]
+ip=ENV["k8s_master1_ip"]
 puts "ip: #{ip}"
 
 puts "Vagrantfile variables ---------------------------------------------------"
@@ -44,21 +44,12 @@ puts "Vagrantfile variables ---------------------------------------------------"
 
 Vagrant.configure("2") do |config|
 
-  config.vm.box = base_box_name_fq
-  config.vm.hostname = vm_name
+  config.vm.box = box_name_fq
+  #config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network "private_network", ip: ip
-  # config.vm.synced_folder "./data", "/data", create: true
-
+  
   config.vm.provider "virtualbox" do |p|
      p.name = vm_name
-     p.linked_clone = false
   end
 
-  config.vm.provision "file", source: "./files", destination: "/home/vagrant/"
-  #config.vm.provision "shell", inline: "mv /home/vagrant/opt /"
-
-  config.vm.provision "shell" do |s|
-    s.path = "provision.sh"
-    s.args = ""
-  end
 end

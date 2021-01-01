@@ -23,11 +23,10 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-set -e
 set -x
 
-cp -r /home/vagrant/files/opt/* /opt/
-cd /opt/
+export readonly this_dir=$(cd "$(dirname $0)";pwd)
+readonly script_dir=$(cd "${this_dir}/../script";pwd)
+source $script_dir/boxes.sh
 
-docker-compose up -d --remove-orphans
-
+up_vm ${box_name____org_k8s_base}
