@@ -1,6 +1,5 @@
   
 # 系统初始化设置
-
 ## 设置admin的密码
   
   打开浏览器，访问https://docker.engineer365.org:40443
