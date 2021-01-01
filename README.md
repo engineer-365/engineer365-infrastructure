@@ -1,6 +1,6 @@
 # 云原生的微服务开发工程示范 - 基础设施的代码化管理
 
-  这里是[“云原生的微服务开发工程示范” engineer-365/cloud-native-micro-service-engineering](https://github.com/engineer-365/cloud-native-micro-service-engineering)的子项目，这个子项目的目标，是遵循`IaC（基础设施代码化管理Infrastructure As Code)`和`GitOps`的思想来实践对微服务开发相关基础设施的部署、管理和监控。
+  这里是[“云原生的微服务开发工程示范” engineer-365/cloud-native-micro-service-engineering](https://github.com/engineer-365/cloud-native-micro-service-engineering)的子项目，这个子项目的目标，是遵循`IaC（基础设施代码化管理Infrastructure As Code)`和`GitOps`的思想来学习和实践对微服务开发相关基础设施的部署、管理和监控。
 
   关于`IaC`:
   > As a best practice, infrastructure-as-code mandates that whatever work is needed to provision computing resources it must be done via code only.
@@ -36,69 +36,39 @@
 
 <hr>
 
-## 各阶段的目标
-
-   - 第1阶段：使用[Vagrant](https://www.vagrantup.com/intro)管理和部署若干个[Virtual Box](https://www.virtualbox.org/)虚拟机，在虚拟机上建立最基本的测试环境，包括：
-     - [x] 1台虚拟机部署Jenkins（单节点）和SonarQube (代码质量检查工具), 做持续集成（CI）和持续部署（CD）
-     - [ ] 1台虚拟机部署Harbor（单节点）, 作为Docker Registry
-     - [ ] 1台虚拟机部署MySQL单机
-     - [ ] 1台虚拟机部署K8S Master, 2台虚拟机部署K8S Worker，使用Jenkins SSH(push模式)部署应用
-
-   - 第2阶段: 使用Ansible和Nomad部署完整的虚拟机功能集群，用于测试环境，包括：
-     - [ ] 使用Ranchor管理Kubernetes集群
-     - [ ] 使用Nexus或JFrog做artifactory
-     - [ ] 使用ArgoCD/gitkube/Jenkins X/FluxCD持续部署到Kubernetes
-     - [ ] 部署MySQL master/slave
-     - [ ] 部署分布式缓存：Redis
-     - [ ] 部署全文检索和日志管理：ELK (Elasticsearch + Logstash + Kibana):
-     - [ ] 部署Consul和Git2Consul，集中管理配置
-     - [ ] 部署Vault，管理MySQL等密码
-     - [ ] 部署OpenTracing/Jaeger，追踪分布式调用链路
-     - [ ] 部署Zabbix、Prometheus和Grafana，监控报警
-     - [ ] 持续集成中支持压力测试和性能测试
-
-   - 第3阶段：高可用化(High Availability)和可扩展(Scalable)
-     - [ ] 实现对IaC的自动化测试
-     - [ ] 升级成多个Jenkins worker
-     - [ ] 升级成高可用MySQL集群：MySQL Router + Group Replication + MySQL Shell
-     - [ ] Redis Sentinel
-     - [ ] ...
-
-   - 第4阶段
-     - [ ] 多集群环境
-     - [ ] 寻找赞助商，对接公有云API，Terraform部署生产环境到公有云
-     - [ ] 支持混合云部署（Openstack私有云+某个公有云）
-     - [ ] ...
-
-   - 第5阶段
-     - [ ] 大数据测试环境
-     - [ ] 彻底去除不符合IaC和GitOps的部分
-     - [ ] 尝试各种替代选项（包括github的替代选项）
-     - [ ] ...
-
-<hr>
-
-## 第1阶段
+## V1 (即第1阶段)
 ## 使用Vagrant管理和部署若干个Virtual Box虚拟机，在虚拟机上建立最基本的测试环境
 
+## 分为IaaS层和PaaS两层
+     
+   1. IaaS层是基础的虚拟机，对应公有云的虚拟机。V1里使用Vagrant和VirtualBox实现，后续版本里最终使用公有云上的虚拟机机替换。但V1同时也是个人使用的本地开发环境会一直保留
+
+   2. PaaS层是以K8S为核心，对应公有云的K8S集群和公有云的其它中间件服务。V1里使用shell script完成安装设置和管理。后续考虑使用Ansible，Nomad，Terraform等工具
+   
+   
+   我们以[https://github.com/engineer-365/fleashop-server](https://github.com/engineer-365/fleashop-server)和[https://github.com/engineer-365/fleashop-fronter](https://github.com/engineer-365/fleashop-fronter)分别作为前后端应用，实现：
+
+   1. 1台虚拟机部署Jenkins, 1台虚拟机部署Harbor docker registry, 1台虚拟机部署MySQL单机, 1台虚拟机部署K8S Master, 3台虚拟机部署K8S Worker
+   2. 应用代码以PR形式提交到Github后，自动触发Jenkins（builder 1虚拟机）上的构建
+   3. 构建过程中，执行单元测试和集成测试
+   4. 构建成功后，推送docker image到Harbor（store 4）虚拟机；然后，用Jenkins SSH(push模式)连接到K8S master，使用kubectl部署应用 
+  
   ### 1. 目录结构
 
    ```shell
    ├── jenkins
    └── virtualbox              # 所有和virtualbox虚拟机有关的都在这个目录
        ├── boxes               # 用于构建各虚拟机的vagrant box
-       │   ├── builder         # 所有builder虚拟机的共用基础box，安装JDK/GO/Node/Maven等构建环境
-       │   ├── builder1        # 第一个builder虚拟机的vagrant box，是Jenkins主节点
-       │   ├── k8s_node1       # K8S Master虚拟机的vagrant box
-       │   ├── k8s_node2       # K8S Worker 1虚拟机的vagrant box
-       │   ├── k8s_node3       # K8S Worker 2虚拟机的vagrant box
+       │   ├── builder         # 所有builder虚拟机的共用基础box, 扩展了ubuntu-bionic, 安装JDK/GO/Node/Maven等构建环境
+       │   ├── builder1        # 第一个builder虚拟机的vagrant box, 扩展了builder，是Jenkins主节点
+       │   ├── k8s-base        # 所有K8S虚拟机的vagrant box
+       │   ├── k8s-master1     # K8S Master 1虚拟机的vagrant box, 扩展了k8s-base
        │   ├── store1          # 5个store虚拟机之一的vagrant box，MySQL主节点
        │   ├── store4          # 5个store虚拟机之一的vagrant box，Harbor Docker Registry
-       │   └── ubuntu-bionic   # 基础的ubuntu 18 (bionic) vagrant box，增加了docker等共用的软件包
+       │   └── ubuntu-bionic   # 基础的ubuntu 18 (bionic) vagrant box, 扩展了官方的ubuntu bionic box，增加了docker等共用的软件包
        ├── builder1            # 第一个builder虚拟机，是Jenkins主节点，使用从boxes/builder1构建好的vagrant box启动
-       ├── k8s_node1           # K8S Master虚拟机，使用从boxes/k8s_node1构建好的vagrant box启动
-       ├── k8s_node2           # K8S Worker 1虚拟机，使用从boxes/k8s_node2构建好的vagrant box启动
-       ├── k8s_node3           # K8S Worker 2虚拟机，使用从boxes/k8s_node3构建好的vagrant box启动
+       ├── k8s-master1         # K8S Master 1虚拟机，使用从boxes/k8s-master1构建好的vagrant box启动
+       ├── k8s-node1 (~5)      # K8S Worker 1~5虚拟机，使用从boxes/k8s-base构建好的vagrant box启动
        ├── script              # 构建、启动等共用的脚本，由各虚拟机的构建/启动脚本间接调用
        │   ├── box_names.sh    # 所有Vagrant box的命名
        │   ├── boxes.sh        # 虚拟机的启动/构建等工具脚本
@@ -111,13 +81,13 @@
 
    主要分为2大类目录：
 
-   1. 根目录里的[./virtualbox](./tree/main/virtualbox)里是目前阶段使用的Vagrant + VirtualBox的所有代码，这里面进一步分为两大类子目录：
+   1. 根目录里的[./virtualbox](./virtualbox)里是目前阶段使用的Vagrant + VirtualBox的所有代码，这里面进一步分为两大类子目录：
       
       - 除了script等辅助目录，每个非boxes子目录下放的都是某一个虚拟机的启动脚本和Vagrant代码。
         * 注：如果不想自己构建，那么可以使用我们已经构建好的Vagrant Box，启动脚本会检测和下载
       
-      - [./virtualbox/boxes](./tree/main/virtualbox/boxes)子目录下是可以用于自己构建虚拟机的Vagrant代码，如果不想自己构建，那么可以忽略。
-        [./virtualbox/boxes](./tree/main/virtualbox/boxes)下的每个子目录的结构都相似，譬如子目录[./virtualbox/boxes/builder1](./tree/main/virtualbox/boxes/builder1)有如下结构：
+      - [./virtualbox/boxes](./virtualbox/boxes)子目录下是可以用于自己构建虚拟机的Vagrant代码，如果不想自己构建，那么可以忽略。
+        [./virtualbox/boxes](./virtualbox/boxes)下的每个子目录的结构都相似，譬如子目录[./virtualbox/boxes/builder1](./virtualbox/boxes/builder1)有如下结构：
 
         ```shell
         /virtualbox/boxes/builder1
@@ -139,7 +109,7 @@
         └── Vagrantfile        # Vagrant的虚拟机描述文件
         ```
       
-   2. 根目录下的其它目录是针对某一个具体软件包的，和虚拟机无关，譬如[./jenkins](./tree/main/jenkins)里是如何在Jenkins中创建job等的文档和工具代码。
+   2. 根目录下的其它目录是针对某一个具体软件包的，和虚拟机无关，譬如[./jenkins](./jenkins)里是如何在Jenkins中创建job等的文档和工具代码。
       
   ### 2. 准备工作 - 安装Vagrant和VirtualBox
 
@@ -169,7 +139,7 @@
   sudo dpkg -i ${VIRTUALBOX_DEB}
   sudo apt --fix-broken install
 
-  # Optional：设置缺省的VirtualBox虚拟机数据目录，默认的数据目录是 ${HOME}/'VirtualBox VMs'
+  # 可选：设置缺省的VirtualBox虚拟机数据目录，默认的数据目录是 ${HOME}/'VirtualBox VMs'
   VM_DIR=/data/virtualbox_vm
   sudo mkdir -p ${VM_DIR} 
   sudo chown -R ${USER}:${USER} ${VM_DIR}
@@ -191,7 +161,7 @@
   wget "https://download.engineer365.org:40443/vagrant/${VAGRANT_DEB}"
   sudo dpkg -i ${VAGRANT_DEB}
   ```
-  #### 2.3 安装Vagrant插件
+  #### 2.3 安装必须的Vagrant插件
 
    - 我们用到了Vagrant的“disks”功能，是vagrant的实验特性，所以需要设置VAGRANT_EXPERIMENTAL环境变量来启用
    ```shell
@@ -204,32 +174,96 @@
   vagrant plugin install vagrant-vbguest
   ```
 
-  - vagrant-disksize (0.1.3)是一个vagrant插件，用于修改虚拟机的磁盘大小（缺省大小仅10G）
+  - vagrant-disksize (0.1.3)是一个vagrant插件，用于修改虚拟机的磁盘大小（官方的Ubuntu 18 box的磁盘仅10G，完全不够用）
   ```shell
   vagrant plugin install vagrant-disksize
   ```
+
+  #### 2.4 安装kubectl
+
+    我们不在宿主机上安装Kubernetes集群，但是为了方便操作虚拟机里的Kubernetes集群，需要安装kubectl。
+
+    Windows和Mac下Docker安装已经带有kubectl，所以这里只以Ubuntu 20为例说明Linux上的安装：
+    ```shell
+    sudo su -
+    curl -s https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -
+    echo "deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main" >> /etc/apt/sources.list.d/kubernetes.list
+    apt-get update && apt-get upgrade
+    apt-get install -y kubectl=1.20.1-00
+    apt-mark hold kubectl
+    ```
+
+    另外，包括Windows和Mac在内，都需要把`192.168.50.151 k8s-master1.engineer365.org`加入/etc/hosts：
+    ```shell
+    echo "192.168.50.151    k8s-master1.engineer365.org" >> /etc/hosts
+    echo "192.168.50.171    k8s-node1.engineer365.org" >> /etc/hosts
+    echo "192.168.50.172    k8s-node2.engineer365.org" >> /etc/hosts
+    echo "192.168.50.173    k8s-node3.engineer365.org" >> /etc/hosts
+    echo "192.168.50.174    k8s-node4.engineer365.org" >> /etc/hosts
+    echo "192.168.50.175    k8s-node5.engineer365.org" >> /etc/hosts
+    ```
 
   ### 3. 启动虚拟机
      
    如果启动脚本检测到宿主机中没有相应版本的Vagrant box，那么启动脚本会从[https://download.engineer365.org:40443/vagrant/box/](https://download.engineer365.org:40443/vagrant/box/)下载我们预先构建好的Vagrant box。
     
-   - [x] builder 1（第一个builder虚拟机）: [./virtualbox/builder1/](./tree/main/virtualbox/builder1/)
-   - [ ] store 1 ～ 5（store虚拟机）: [./virtualbox/store1/](./tree/main/virtualbox/store1/)
-   - [ ] K8S node 1（K8S Master虚拟机）: [./virtualbox/k8s_node1/](./tree/main/virtualbox/k8s_node1/)
-   - [ ] K8S node 2 ～ 3（K8S Worker 1虚拟机）: [./virtualbox/k8s_node2/](./tree/main/virtualbox/k8s_node2/)
+   - [x] builder 1虚拟机: [./virtualbox/builder1/](./virtualbox/builder1/)
+   - [ ] store 1和store 4虚拟机: [./virtualbox/store1/](./virtualbox/store1/)
+   - [x] K8S master 1虚拟机: [./virtualbox/k8s-master1/](./virtualbox/k8s-master1/)
+   - [x] K8S node 1 ～ 5虚拟机: [./virtualbox/k8s-node1/](./virtualbox/k8s-node1/)，至少启动3个
 
   ### 4. 可选：构建虚拟机
 
    想完整的从零开始构建全部虚拟机的话，请按照以下顺序执行构建（构建过程比较耗时）：
 
-   1. [x] ubuntu-bionic（基础的ubuntu 18 (bionic) vagrant box）: [./virtualbox/boxes/ubuntu-bionic/](./tree/main/virtualbox/boxes/ubuntu-bionic)
-   2. [x] builder（所有builder虚拟机的共用基础box）: [./virtualbox/boxes/builder/](./tree/main/virtualbox/boxes/builder)
-   3. [ ] builder 1（第一个builder虚拟机）: [./virtualbox/boxes/builder1/](./tree/main/virtualbox/boxes/builder1/)
-   4. [ ] store 1 ～ 5（store虚拟机的vagrant box）: [./virtualbox/boxes/store1/](./tree/main/virtualbox/boxes/store1/)
-   5. [ ] K8S node 1（K8S Master虚拟机）: [./virtualbox/boxes/k8s_node1/](./tree/main/virtualbox/boxes/k8s_node1/)
-   6. [ ] K8S node 2 ～ 3（K8S Worker虚拟机）: [./virtualbox/boxes/k8s_node2/](./tree/main/virtualbox/boxes/k8s_node2/)
+   1. [x] [./virtualbox/boxes/ubuntu-bionic/](./virtualbox/boxes/ubuntu-bionic)
+   2. [x] [./virtualbox/boxes/builder/](./virtualbox/boxes/builder)
+   3. [x] [./virtualbox/boxes/builder1/](./virtualbox/boxes/builder1/)
+   4. [ ] [./virtualbox/boxes/store1/](./virtualbox/boxes/store1/)
+   5. [ ] [./virtualbox/boxes/store4/](./virtualbox/boxes/store4/)
+   6. [x] [./virtualbox/boxes/k8s-base/](./virtualbox/boxes/k8s-base/)
+   7. [x] [./virtualbox/boxes/k8s-master1/](./virtualbox/boxes/k8s-master1/)
 
    构建的输出物是Vagrant box，是给Vagrant对虚拟机做的打包格式，以`.box`作为文件扩展名。
+
+<hr>
+
+
+
+## 其它阶段的目标
+
+   - V2: 使用Ansible和Nomad部署完整的虚拟机功能集群，用于测试环境，包括：
+     - [ ] 支持私有部署的Gitlab
+     - [ ] 使用Ranchor管理Kubernetes集群
+     - [ ] 使用Nexus或JFrog做artifactory
+     - [ ] 使用ArgoCD/gitkube/Jenkins X/FluxCD持续部署到Kubernetes
+     - [ ] 部署MySQL master/slave
+     - [ ] 部署分布式缓存：Redis
+     - [ ] 部署全文检索和日志管理：ELK (Elasticsearch + Logstash + Kibana):
+     - [ ] 部署Consul和Git2Consul，集中管理配置
+     - [ ] 部署Vault，管理MySQL等密码
+     - [ ] 部署OpenTracing/Jaeger，追踪分布式调用链路
+     - [ ] 部署Zabbix、Prometheus和Grafana，监控报警
+     - [ ] 持续集成中支持压力测试和性能测试
+
+   - V3：高可用化(High Availability)和可扩展(Scalable)
+     - [ ] 实现对IaC的自动化测试
+     - [ ] 升级成多个Jenkins worker
+     - [ ] 升级成高可用MySQL集群：MySQL Router + Group Replication + MySQL Shell
+     - [ ] Redis Sentinel
+     - [ ] ...
+
+   - V4
+     - [ ] 多集群环境
+     - [ ] 寻找赞助商，对接公有云API，Terraform部署生产环境到公有云
+     - [ ] 支持混合云部署（Openstack私有云+某个公有云）
+     - [ ] ...
+
+   - V5
+     - [ ] 大数据测试环境
+     - [ ] 彻底去除不符合IaC和GitOps的部分
+     - [ ] 尝试各种替代选项（包括github的替代选项）
+     - [ ] ...
 
 <hr>
 
@@ -318,3 +352,17 @@
   ```sudo mkdir -p /home/qiangyt/engineer365/repos/engineer365-infrastructure/virtualbox/boxes/ubuntu-bionic/```
 
   然后```vagrant destroy```，并重新执行。
+
+
+## TODO
+
+  1. 重构Vagrant box的复用层级
+   
+     目前的扩展层次已经有4层，譬如: ubuntu bionic官方box -> engineer365专用基础box -> builder box -> builder1 box。这样的方式虽然达到了复用安装的各种软件包的目的，但是层级多了结构复杂。一方面，这个项目的主要目标是学习和示范，不是开发框架，结构复杂的示例不够简单明了，不方便学习参考；另一方面，VirtualBox只适合本地环境开发使用，用结构复杂的代价获得层次化的可复用的box，这点对于线上应用来说也没有意义。
+     所以，改进的方向就是简化，想法是：
+     1. 最多两层。尽可能通过provision script的复用做到复用，而不是box层面的复用
+     2. 做provision script的生成器，生成器可以为了高度复用而做得复杂，但生成的provion script不必复用，反而应该是虽然冗长重复性大但直接了当和平铺直叙的。
+       （也许，生成器可以是另一个仓库?）
+     3. 用声明式的方式而不是provision script的过程式脚本。
+        (所以，直接开始用Ansible?)
+

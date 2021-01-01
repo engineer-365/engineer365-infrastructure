@@ -1,4 +1,4 @@
-# 构建builder的基础镜像
+# builder（构建虚拟机）的基础镜像
 
   是builder1等CI/CD虚拟机的基础镜像，用于部署Jenkins等服务。
 

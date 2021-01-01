@@ -45,7 +45,7 @@ puts "Vagrantfile variables ---------------------------------------------------"
 Vagrant.configure("2") do |config|
 
   config.vm.box = box_name_fq
-  config.vm.network "private_network", ip: ip
+  config.vm.network "private_network", ip: ip, hostname: true
   
   config.vm.provider "virtualbox" do |p|
      p.name = vm_name

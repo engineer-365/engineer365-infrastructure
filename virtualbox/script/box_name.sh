@@ -32,7 +32,7 @@ export readonly box_name____org_monitor="monitor-20201211"
 export readonly box_name____org_proxy="proxy-20201211"
 export readonly box_name____org_builder="builder-20201211"
 export readonly box_name____org_k8s_master="k8s-master-20201211"
-export readonly box_name____org_k8s_node="k8s-node-20201211"
+export readonly box_name____org_k8s_base="k8s-base-20201211"
 
 # final boxes
 export readonly box_name____org_monitor0="monitor0-20201211"

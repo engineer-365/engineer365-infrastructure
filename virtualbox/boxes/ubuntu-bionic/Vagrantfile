@@ -54,6 +54,10 @@ Vagrant.configure("2") do |config|
   
   config.vm.box = base_box_name_fq # "ubuntu/bionic64"
 
+  # In "ubuntu/bionic64", the base_mac is fixed as "021D48B0D5B9"
+  # That is not what we wanted, so remove that.
+  config.vm.base_mac = "auto"
+
   config.vm.provider "virtualbox" do |p|
     p.name = vm_name_fq
     p.linked_clone = false
@@ -64,8 +68,8 @@ Vagrant.configure("2") do |config|
     p.check_guest_additions = false
     
     p.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
-    #p.customize ["storagectl", :id, "--name", "SATA Controller", "--add", "sata", "--controller", "IntelAHCI"]  
-    
+    #p.customize ["storagectl", :id, "--name", "SATA Controller", "--add", "sata", "--controller", "IntelAHCI"]
+
     # Customize the amount of memory on the VM:
     p.memory = "4096"
     p.cpus = 2
