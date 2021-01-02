@@ -90,9 +90,6 @@ plugins:
  - artifactId: nodejs
    source:
       version: 1.3.9
- - artifactId: cobertura
-   source:
-      version: 1.16
  - artifactId: htmlpublisher
    source:
       version: 1.25
@@ -192,24 +189,56 @@ plugins:
  - artifactId: delivery-pipeline-plugin
    source:
       version: 1.4.2
+ - artifactId: pipeline-utility-steps
+   source:
+      version: 2.6.1
+ - artifactId: jacoco
+   source:
+      version: 3.1.0
+ - artifactId: git-forensics
+   source:
+      version: 0.8.0
+ - artifactId: javadoc
+   source:
+      version: 1.6
+ - artifactId: log-parser
+   source:
+      version: 2.1
+ - artifactId: sidebar-link
+   source:
+      version: 1.11.0
+ - artifactId: chucknorris
+   source:
+      version: 1.4
+ - artifactId: ownership
+   source:
+      version: 0.13.0
+ - artifactId: test-results-analyzer
+   source:
+      version: 0.3.5
+ - artifactId: custom-tools-plugin
+   source:
+      version: 0.7
+ - artifactId: ansicolor
+   source:
+      version: 0.7.3
+ - artifactId: environment-dashboard
+   source:
+      version: 1.1.7
+ - artifactId: config-file-provider
+   source:
+      version: 3.7.0
+ - artifactId: plot
+   source:
+      version: 2.1.8
+ - artifactId: mask-passwords # requires a greater version of Jenkins (2.272) than 2.269
+   source:
+      version: 3.0
 
-# examples:
-#
-#  - artifactId: git
-#    source:
-#      version: latest
-#  - artifactId: job-import-plugin
-#    source:
-#      version: 2.1
-#  - artifactId: docker
-#  - artifactId: cloudbees-bitbucket-branch-source
-#    source:
-#      version: 2.4.4
-#  - artifactId: script-security
-#    source:
-#      url: http://ftp-chi.osuosl.org/pub/jenkins/plugins/script-security/1.56/script-security.hpi
+# example
 #  - artifactId: workflow-step-api
 #    groupId: org.jenkins-ci.plugins.workflow
 #    source:
 #      version: 2.19-rc289.d09828a05a74
+#      url: http://ftp-chi.osuosl.org/pub/jenkins/plugins/script-security/1.56/script-security.hpi
 
