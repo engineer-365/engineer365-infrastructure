@@ -1,16 +1,6 @@
-# 1. 制作store镜像
+# 构建store 1虚拟机(MySQL)
 
-     下面步骤是存储类服务器VirtualBox虚拟机使用的基础镜像。
-
-     1. 第一种方法是自己制作，比较耗时
-
-        `./build.sh`
-
-     2. 第二种方法，是可以从我们的镜像网站下载并添加
-
-        `./import.sh`
-
-# 2. 常用vagrant命令
-
-     启动：`vagrant up`
-     SSH登录：`vagrant ssh`
+  这个虚拟机使用docker-compose部署MySQL 8.0.22。
+  
+  V1(第一阶段)只部署单机，V2会升级为Master/Slave单集群的Master。
+### 执行：`./build.sh`
