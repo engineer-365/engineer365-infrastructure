@@ -179,6 +179,30 @@
   vagrant plugin install vagrant-disksize
   ```
 
+  #### 2.4 安装kubectl
+
+    我们不在宿主机上安装Kubernetes集群，但是为了方便操作虚拟机里的Kubernetes集群，需要安装kubectl。
+
+    Windows和Mac下Docker安装已经带有kubectl，所以这里只以Ubuntu 20为例说明Linux上的安装：
+    ```shell
+    sudo su -
+    curl -s https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -
+    echo "deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main" >> /etc/apt/sources.list.d/kubernetes.list
+    apt-get update && apt-get upgrade
+    apt-get install -y kubectl=1.20.1-00
+    apt-mark hold kubectl
+    ```
+
+    另外，包括Windows和Mac在内，都需要把`192.168.50.151 k8s-master1.engineer365.org`加入/etc/hosts：
+    ```shell
+    echo "192.168.50.151    k8s-master1.engineer365.org" >> /etc/hosts
+    echo "192.168.50.171    k8s-node1.engineer365.org" >> /etc/hosts
+    echo "192.168.50.172    k8s-node2.engineer365.org" >> /etc/hosts
+    echo "192.168.50.173    k8s-node3.engineer365.org" >> /etc/hosts
+    echo "192.168.50.174    k8s-node4.engineer365.org" >> /etc/hosts
+    echo "192.168.50.175    k8s-node5.engineer365.org" >> /etc/hosts
+    ```
+
   ### 3. 启动虚拟机
      
    如果启动脚本检测到宿主机中没有相应版本的Vagrant box，那么启动脚本会从[https://download.engineer365.org:40443/vagrant/box/](https://download.engineer365.org:40443/vagrant/box/)下载我们预先构建好的Vagrant box。
@@ -196,9 +220,9 @@
    2. [x] [./virtualbox/boxes/builder/](./virtualbox/boxes/builder)
    3. [x] [./virtualbox/boxes/builder1/](./virtualbox/boxes/builder1/)
    4. [ ] [./virtualbox/boxes/store1/](./virtualbox/boxes/store1/)
-   4. [ ] [./virtualbox/boxes/store4/](./virtualbox/boxes/store4/)
-   5. [x] [./virtualbox/boxes/k8s-base/](./virtualbox/boxes/k8s-base/)
-   6. [x] [./virtualbox/boxes/k8s-master1/](./virtualbox/boxes/k8s-master1/)
+   5. [ ] [./virtualbox/boxes/store4/](./virtualbox/boxes/store4/)
+   6. [x] [./virtualbox/boxes/k8s-base/](./virtualbox/boxes/k8s-base/)
+   7. [x] [./virtualbox/boxes/k8s-master1/](./virtualbox/boxes/k8s-master1/)
 
    构建的输出物是Vagrant box，是给Vagrant对虚拟机做的打包格式，以`.box`作为文件扩展名。
 
