@@ -56,10 +56,6 @@ echo "export JENKINS_UC_DOWNLOAD=https://mirrors.tuna.tsinghua.edu.cn/jenkins/" 
 
 source /etc/profile
 
-echo "192.168.50.20    docker.engineer365.org"  >> /etc/hosts
-echo "192.168.50.20    nexus.engineer365.org"   >> /etc/hosts
-echo "127.0.0.1        builder.engineer365.org" >> /etc/hosts
-
 # offline install #############################################################
 
 cd /tmp/
