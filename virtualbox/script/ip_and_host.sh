@@ -299,7 +299,7 @@ echo "${grafana1_ip}    ${grafana1_host}" >> $etc_hosts_file
 echo "${grafana1_ip}    grafana1" >> $etc_hosts_file
 
 
-export readonly docker_vip=$store_vip
+export readonly docker_vip=$store4_vip
 export readonly docker_vhost="docker.${org}"
 echo "${docker_vip}    ${docker_vhost}" >> $etc_hosts_file
 echo "${docker_vip}    docker" >> $etc_hosts_file
