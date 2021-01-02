@@ -41,13 +41,10 @@ tar -C /opt/ -xzf ${HARBOR_INSTALLER}
 cd /opt/harbor
 
 mv /home/vagrant/files/harbor/harbor.yml ./
+mv /home/vagrant/files/harbor/cert ./
 
 # Default installation without Notary, Clair, or Chart Repository Service
 ./install.sh
-
-docker-compose down --remove-orphans
-mv /home/vagrant/files/harbor/common/config/nginx/nginx.conf /opt/harbor/common/config/nginx/nginx.conf
-docker-compose up -d
 
 # TODO:
 # create project/users via CLI, see https://goharbor.io/docs/2.0.0/install-config/configure-user-settings-cli/

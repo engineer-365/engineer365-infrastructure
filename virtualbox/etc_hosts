@@ -122,8 +122,6 @@
 192.168.50.100    grafana
 192.168.50.101    grafana1.engineer365.org
 192.168.50.101    grafana1
-192.168.50.20    docker.engineer365.org
-192.168.50.20    docker
 192.168.50.24    docker1.engineer365.org
 192.168.50.24    docker1
 192.168.50.25    docker2.engineer365.org
