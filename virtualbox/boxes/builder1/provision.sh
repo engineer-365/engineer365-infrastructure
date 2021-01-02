@@ -42,8 +42,8 @@ sleep 180
 # - Set Jenkins to listen on port 8080. Access this port with your browser to start configuration.
 # - admin password is initialized in /var/lib/jenkins/secrets/initialAdminPassword
 
-JENKINS_VER=2.269
-JENKINS_PLUGIN_MGR_VER=2.5.0
+echo "export JENKINS_VER=2.269" >> /etc/profile
+echo "export JENKINS_PLUGIN_MGR_VER=2.5.0" >> /etc/profile
 
 # the nginx is used  to reverse-proxy as mirror ###############################
 
@@ -87,13 +87,11 @@ ln -s /root/jenkins-tool/jenkins-plugin-manager-${JENKINS_PLUGIN_MGR_VER}.jar /r
 # java -jar jenkins-plugin-manager-*.jar --war /your/path/to/jenkins.war --plugin-file /your/path/to/plugins.txt --plugins delivery-pipeline-plugin:1.3.2 deployit-plugin
 java -jar /root/jenkins-tool/jenkins-plugin-manager.jar \
      --verbose \
-     --jenkins-update-center https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/dynamic-2.269/update-center.actual.json \
+     --jenkins-update-center https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/dynamic-${JENKINS_VER}/update-center.actual.json \
      --jenkins-experimental-update-center https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/experimental/update-center.actual.json \
      --jenkins-plugin-info https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/current/plugin-versions.json \
      --plugin-file /root/jenkins-tool/plugins.yaml \
-     --plugin-download-directory /var/lib/jenkins/plugins/ \
-     --plugins delivery-pipeline-plugin:1.4.2 \
-     deployit-plugin
+     --plugin-download-directory /var/lib/jenkins/plugins
 #     --skip-failed-plugins
 
 # enable jenkins to talk with docker ##########################################
