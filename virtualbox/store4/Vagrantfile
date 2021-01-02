@@ -46,6 +46,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = box_name_fq
   config.vm.network "private_network", ip: ip, hostname: true
+  config.vm.network "forwarded_port", guest: 40444, host: 40444
   
   config.vm.provider "virtualbox" do |p|
      p.name = vm_name
