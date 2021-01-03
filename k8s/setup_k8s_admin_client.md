@@ -24,3 +24,15 @@
 
    需要注意的是，因为我们的Vagrant VirtualBox虚拟机是使用的private network模式，这些虚拟机只能在当前宿主机上有效，所以，从宿主机外部是访问不到的。
 
+4. 在宿主机上安装kubectl
+
+   ```shell
+   apt-get install -y apt-transport-https curl ebtables ethtool
+   curl -s https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -  
+   echo "deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main" >> /etc/apt/sources.list.d/kubernetes.list
+   apt-get update && apt-get upgrade
+
+   K8S_VER="1.20.1-00"
+   apt-get install -y kubectl=${K8S_VER}
+   apt-mark hold kubectl
+   ```

@@ -32,6 +32,15 @@ set -x
 # /tmp folder is used to save downloaded file.
 cd /tmp
 
+# install kubectl
+curl -s https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -  
+echo "deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main" >> /etc/apt/sources.list.d/kubernetes.list
+apt-get update && apt-get upgrade
+
+K8S_VER="1.20.1-00"
+apt-get install -y kubectl=${K8S_VER}
+apt-mark hold kubectl
+
 # /opt is the installation folder for various of software
 
 # wget --quiet "${download_site}/other_tools/putget/putget.linux"
