@@ -37,19 +37,12 @@ echo "221.231.81.239  mirrors.aliyun.com" >> $etc_hosts_file
 #echo "47.97.242.13 dockerauth.cn-hangzhou.aliyuncs.com" >> $etc_hosts_file
 #echo "118.31.232.191 aliregistry.oss-cn-hangzhou.aliyuncs.com" >> $etc_hosts_file
 
-export readonly monitor_vip="192.168.50.10"
-export readonly monitor_vhost="monitor.${org}"
-echo "${monitor_vip}    ${monitor_vhost}" >> $etc_hosts_file
-echo "${monitor_vip}    monitor" >> $etc_hosts_file
 export readonly monitor1_ip="192.168.50.11"
 export readonly monitor1_host="monitor1.${org}"
 echo "${monitor1_ip}    ${monitor1_host}" >> $etc_hosts_file
 echo "${monitor1_ip}    monitor1" >> $etc_hosts_file
 
-export readonly store_vip="192.168.50.20"
-export readonly store_vhost="store.${org}"
-echo "${store_vip}    ${store_vhost}" >> $etc_hosts_file
-echo "${store_vip}    store" >> $etc_hosts_file
+
 export readonly store1_ip="192.168.50.21"
 export readonly store1_host="store1.${org}"
 echo "${store1_ip}    ${store1_host}" >> $etc_hosts_file
@@ -71,10 +64,7 @@ export readonly store5_host="store5.${org}"
 echo "${store5_ip}    ${store5_host}" >> $etc_hosts_file
 echo "${store5_ip}    store5" >> $etc_hosts_file
 
-export readonly proxy_vip="192.168.50.100"
-export readonly proxy_vhost="proxy.${org}"
-echo "${proxy_vip}    ${proxy_vhost}" >> $etc_hosts_file
-echo "${proxy_vip}    proxy" >> $etc_hosts_file
+
 export readonly proxy1_ip="192.168.50.101"
 export readonly proxy1_host="proxy1.${org}"
 echo "${proxy1_ip}    ${proxy1_host}" >> $etc_hosts_file
@@ -84,10 +74,7 @@ export readonly proxy2_host="proxy2.${org}"
 echo "${proxy2_ip}    ${proxy2_host}" >> $etc_hosts_file
 echo "${proxy2_ip}    proxy2" >> $etc_hosts_file
 
-export readonly builder_vip="192.168.50.120"
-export readonly builder_vhost="builder.${org}"
-echo "${builder_vip}    ${builder_vhost}" >> $etc_hosts_file
-echo "${builder_vip}    builder" >> $etc_hosts_file
+
 export readonly builder1_ip="192.168.50.121"
 export readonly builder1_host="builder1.${org}"
 echo "${builder1_ip}    ${builder1_host}" >> $etc_hosts_file
@@ -97,10 +84,7 @@ export readonly builder2_host="builder2.${org}"
 echo "${builder2_ip}    ${builder2_host}" >> $etc_hosts_file
 echo "${builder2_ip}    builder2" >> $etc_hosts_file
 
-export readonly k8s_master_vip="192.168.50.150"
-export readonly k8s_master_vhost="k8s-master.${org}"
-echo "${k8s_master_vip}    ${k8s_master_vhost}" >> $etc_hosts_file
-echo "${k8s_master_vip}    k8s-master" >> $etc_hosts_file
+
 export readonly k8s_master1_ip="192.168.50.151"
 export readonly k8s_master1_host="k8s-master1.${org}"
 echo "${k8s_master1_ip}    ${k8s_master1_host}" >> $etc_hosts_file
@@ -109,6 +93,7 @@ export readonly k8s_master2_ip="192.168.50.152"
 export readonly k8s_master2_host="k8s-master2.${org}"
 echo "${k8s_master2_ip}    ${k8s_master2_host}" >> $etc_hosts_file
 echo "${k8s_master2_ip}    k8s-master2" >> $etc_hosts_file
+
 
 export readonly k8s_node1_ip="192.168.50.171"
 export readonly k8s_node1_host="k8s-node1.${org}"
@@ -132,10 +117,6 @@ echo "${k8s_node5_ip}    ${k8s_node5_host}" >> $etc_hosts_file
 echo "${k8s_node5_ip}    k8s-node5" >> $etc_hosts_file
 
 # aliases
-export readonly mysql_router_vip=$proxy_vip
-export readonly mysql_router_vhost="mysql-router.${org}"
-echo "${mysql_router_vip}    ${mysql_router_vhost}" >> $etc_hosts_file
-echo "${mysql_router_vip}    mysql-router" >> $etc_hosts_file
 export readonly mysql_router1_ip=$proxy1_ip
 export readonly mysql_router1_host="mysql-router1.${org}"
 echo "${mysql_router1_ip}    ${mysql_router1_host}" >> $etc_hosts_file
@@ -165,11 +146,6 @@ export readonly mysql_slave3_host="mysql-slave3.${org}"
 echo "${mysql_slave3_ip}    ${mysql_slave3_host}" >> $etc_hosts_file
 echo "${mysql_slave3_ip}    mysql-slave3" >> $etc_hosts_file
 
-
-export readonly mongodb_router_vip=$proxy_vip
-export readonly mongodb_router_vhost="mongodb-router.${org}"
-echo "${mongodb_router_vip}    ${mongodb_router_vhost}" >> $etc_hosts_file
-echo "${mongodb_router_vip}    mongodb-router" >> $etc_hosts_file
 export readonly mongodb_router1_ip=$proxy1_ip
 export readonly mongodb_router1_host="mongodb-router1.${org}"
 echo "${mongodb_router1_ip}    ${mongodb_router1_host}" >> $etc_hosts_file
@@ -200,10 +176,7 @@ export readonly mongodb_slave3_host="mongodb-slave3.${org}"
 echo "${mongodb_slave3_ip}    ${mongodb_slave3_host}" >> $etc_hosts_file
 echo "${mongodb_slave3_ip}    mongodb-slave3" >> $etc_hosts_file
 
-export readonly redis_vip=$proxy_vip
-export readonly redis_vhost="redis.${org}"
-echo "${redis_vip}    ${redis_vhost}" >> $etc_hosts_file
-echo "${redis_vip}    redis" >> $etc_hosts_file
+
 export readonly redis1_ip=$proxy1_ip
 export readonly redis1_host="redis1.${org}"
 echo "${redis1_ip}    ${redis1_host}" >> $etc_hosts_file
@@ -213,10 +186,7 @@ export readonly redis2_host="redis2.${org}"
 echo "${redis2_ip}    ${redis2_host}" >> $etc_hosts_file
 echo "${redis2_ip}    redis2" >> $etc_hosts_file
 
-export readonly ingress_vip=$proxy_vip
-export readonly ingress_vhost="ingress.${org}"
-echo "${ingress_vip}    ${ingress_vhost}" >> $etc_hosts_file
-echo "${ingress_vip}    ingress" >> $etc_hosts_file
+
 export readonly ingress1_ip=$proxy1_ip
 export readonly ingress1_host="ingress1.${org}"
 echo "${ingress1_ip}    ${ingress1_host}" >> $etc_hosts_file
@@ -226,10 +196,7 @@ export readonly ingress2_host="ingress2.${org}"
 echo "${ingress2_ip}    ${ingress2_host}" >> $etc_hosts_file
 echo "${ingress2_ip}    ingress2" >> $etc_hosts_file
 
-export readonly kibana_vip=$proxy_vip
-export readonly kibana_vhost="kibana.${org}"
-echo "${kibana_vip}    ${kibana_vhost}" >> $etc_hosts_file
-echo "${kibana_vip}    kibana" >> $etc_hosts_file
+
 export readonly kibana1_ip=$proxy1_ip
 export readonly kibana1_host="kibana1.${org}"
 echo "${kibana1_ip}    ${kibana1_host}" >> $etc_hosts_file
@@ -246,10 +213,8 @@ export readonly elasticsearch2_ip=$store4_ip
 export readonly elasticsearch2_host="elasticsearch2.${org}"
 echo "${elasticsearch2_ip}    ${elasticsearch2_host}" >> $etc_hosts_file
 echo "${elasticsearch2_ip}    elasticsearch2" >> $etc_hosts_file
-export readonly logstash_vip=$store_vip
-export readonly logstash_vhost="logstash.${org}"
-echo "${logstash_vip}    ${logstash_vhost}" >> $etc_hosts_file
-echo "${logstash_vip}    logstash" >> $etc_hosts_file
+
+
 export readonly logstash1_ip=$store4_ip
 export readonly logstash1_host="logstash1.${org}"
 echo "${logstash1_ip}    ${logstash1_host}" >> $etc_hosts_file
@@ -259,10 +224,7 @@ export readonly logstash2_host="logstash2.${org}"
 echo "${logstash2_ip}    ${logstash2_host}" >> $etc_hosts_file
 echo "${logstash2_ip}    logstash2" >> $etc_hosts_file
 
-export readonly etcd_vip=$store_vip
-export readonly etcd_vhost="etcd.${org}"
-echo "${etcd_vip}    ${etcd_vhost}" >> $etc_hosts_file
-echo "${etcd_vip}    etcd" >> $etc_hosts_file
+
 export readonly etcd1_ip=$store3_ip
 export readonly etcd1_host="etcd1.${org}"
 echo "${etcd1_ip}    ${etcd1_host}" >> $etc_hosts_file
@@ -276,10 +238,7 @@ export readonly etcd3_host="etcd3.${org}"
 echo "${etcd3_ip}    ${etcd3_host}" >> $etc_hosts_file
 echo "${etcd3_ip}    etcd3" >> $etc_hosts_file
 
-export readonly prometheus_vip=$store_vip
-export readonly prometheus_vhost="prometheus.${org}"
-echo "${prometheus_vip}    ${prometheus_vhost}" >> $etc_hosts_file
-echo "${prometheus_vip}    prometheus" >> $etc_hosts_file
+
 export readonly prometheus1_ip=$store1_ip
 export readonly prometheus1_host="prometheus1.${org}"
 echo "${prometheus1_ip}    ${prometheus1_host}" >> $etc_hosts_file
@@ -289,10 +248,7 @@ export readonly prometheus2_host="prometheus2.${org}"
 echo "${prometheus2_ip}    ${prometheus2_host}" >> $etc_hosts_file
 echo "${prometheus2_ip}    prometheus2" >> $etc_hosts_file
 
-export readonly grafana_vip=$proxy_vip
-export readonly grafana_vhost="grafana.${org}"
-echo "${grafana_vip}    ${grafana_vhost}" >> $etc_hosts_file
-echo "${grafana_vip}    grafana" >> $etc_hosts_file
+
 export readonly grafana1_ip=$proxy1_ip
 export readonly grafana1_host="grafana1.${org}"
 echo "${grafana1_ip}    ${grafana1_host}" >> $etc_hosts_file
@@ -308,10 +264,6 @@ echo "${docker2_ip}    ${docker2_host}" >> $etc_hosts_file
 echo "${docker2_ip}    docker2" >> $etc_hosts_file
 
 
-export readonly sonar_vip=$store_vip
-export readonly sonar_vhost="sonar.${org}"
-echo "${sonar_vip}    ${sonar_vhost}" >> $etc_hosts_file
-echo "${sonar_vip}    sonar" >> $etc_hosts_file
 export readonly sonar1_ip=$store4_ip
 export readonly sonar1_host="sonar1.${org}"
 echo "${sonar1_ip}    ${sonar1_host}" >> $etc_hosts_file
@@ -322,10 +274,6 @@ echo "${sonar2_ip}    ${sonar2_host}" >> $etc_hosts_file
 echo "${sonar2_ip}    sonar2" >> $etc_hosts_file
 
 
-export readonly nexus_vip=$store_vip
-export readonly nexus_vhost="nexus.${org}"
-echo "${nexus_vip}    ${nexus_vhost}" >> $etc_hosts_file
-echo "${nexus_vip}    nexus" >> $etc_hosts_file
 export readonly nexus1_ip=$store1_ip
 export readonly nexus1_host="nexus1.${org}"
 echo "${nexus1_ip}    ${nexus1_host}" >> $etc_hosts_file
@@ -336,10 +284,6 @@ echo "${nexus2_ip}    ${nexus2_host}" >> $etc_hosts_file
 echo "${nexus2_ip}    nexus2" >> $etc_hosts_file
 
 
-export readonly npm_vip=$store_vip
-export readonly npm_vhost="npm.${org}"
-echo "${npm_vip}    ${npm_vhost}" >> $etc_hosts_file
-echo "${npm_vip}    npm" >> $etc_hosts_file
 export readonly npm1_ip=$store2_ip
 export readonly npm1_host="npm1.${org}"
 echo "${npm1_ip}    ${npm1_host}" >> $etc_hosts_file
