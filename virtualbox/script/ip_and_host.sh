@@ -201,10 +201,6 @@ export readonly kibana1_ip=$proxy1_ip
 export readonly kibana1_host="kibana1.${org}"
 echo "${kibana1_ip}    ${kibana1_host}" >> $etc_hosts_file
 echo "${kibana1_ip}    kibana1" >> $etc_hosts_file
-export readonly elasticsearch_vip=$store_vip
-export readonly elasticsearch_vhost="elasticsearch.${org}"
-echo "${elasticsearch_vip}    ${elasticsearch_vhost}" >> $etc_hosts_file
-echo "${elasticsearch_vip}    elasticsearch" >> $etc_hosts_file
 export readonly elasticsearch1_ip=$store3_ip
 export readonly elasticsearch1_host="elasticsearch1.${org}"
 echo "${elasticsearch1_ip}    ${elasticsearch1_host}" >> $etc_hosts_file
