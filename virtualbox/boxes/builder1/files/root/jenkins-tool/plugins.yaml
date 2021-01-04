@@ -231,9 +231,9 @@ plugins:
  - artifactId: plot
    source:
       version: 2.1.8
- - artifactId: mask-passwords # requires a greater version of Jenkins (2.272) than 2.269
-   source:
-      version: 3.0
+ #- artifactId: mask-passwords # requires a greater version of Jenkins (2.272) than 2.269
+ #  source:
+ #     version: 3.0
 
 # example
 #  - artifactId: workflow-step-api
