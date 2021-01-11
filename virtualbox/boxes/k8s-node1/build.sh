@@ -25,10 +25,9 @@
 
 set -x
 
-readonly this_dir=$(cd "$(dirname $0)";pwd)
+export readonly this_dir=$(cd "$(dirname $0)";pwd)
 readonly script_dir=$(cd "${this_dir}/../../script";pwd)
 source $script_dir/boxes.sh
 
 import_box ${box_name____org_k8s_base}
-
-build_box_manual ${box_name____org_k8s_master1}
+build_box_manual ${box_name____org_k8s_node1}

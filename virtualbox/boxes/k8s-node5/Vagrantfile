@@ -1,4 +1,5 @@
-#!/bin/bash
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
 
 #
 #  MIT License
@@ -23,12 +24,32 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-set -x
+puts "Vagrantfile variables ---------------------------------------------------"
 
-readonly this_dir=$(cd "$(dirname $0)";pwd)
-readonly script_dir=$(cd "${this_dir}/../../script";pwd)
-source $script_dir/boxes.sh
+org=ENV["org"]
+puts "org: #{org}"
 
-import_box ${box_name____org_k8s_base}
+vm_name=ENV["k8s_node5_host"]
+puts "vm name: #{vm_name}"
 
-build_box_manual ${box_name____org_k8s_master1}
+base_box_name=ENV["box_name____org_k8s_base"]
+base_box_name_fq="#{org}/#{base_box_name}"
+puts "base box: #{base_box_name_fq}"
+
+ip=ENV["k8s_node5_ip"]
+puts "ip: #{ip}"
+
+puts "Vagrantfile variables ---------------------------------------------------"
+
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = base_box_name_fq
+  config.vm.hostname = vm_name
+  config.vm.network "private_network", ip: ip, hostname: true
+
+  config.vm.provider "virtualbox" do |p|
+     p.name = vm_name
+  end
+
+end
