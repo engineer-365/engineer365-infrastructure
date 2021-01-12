@@ -97,7 +97,6 @@ sysctl --system
 # kubeadm: the command to bootstrap the cluster.
 # kubelet: the component that runs on all cluster machines and does things like starting pods and containers.
 # kubectl: the command line util to talk to your cluster.
-apt-get install -qq -y apt-transport-https curl ebtables ethtool
 
 # curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 curl -s https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -
