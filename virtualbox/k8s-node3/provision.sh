@@ -23,11 +23,11 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
+set -e
 set -x
 
-export readonly this_dir=$(cd "$(dirname $0)";pwd)
-readonly script_dir=$(cd "${this_dir}/../../script";pwd)
-source $script_dir/boxes.sh
-
-import_box ${box_name____org_k8s_base}
-build_box ${box_name____org_k8s_node1}
+JOIN_CMD=/home/admin/kubeadm_join_command.sh
+scp -i /home/admin/.ssh/id_rsa -o StrictHostKeyChecking=no admin@k8s-master1.engineer365.org:${JOIN_CMD} ${JOIN_CMD}
+chmod u+x ${JOIN_CMD}
+sh ${JOIN_CMD}
+rm ${JOIN_CMD}
