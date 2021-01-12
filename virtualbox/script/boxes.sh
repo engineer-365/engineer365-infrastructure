@@ -89,7 +89,7 @@ function build_box_manual() {
     ## uncomment below code, change the 'upload_site_for_scp', if you want to
     ## upload boxes somewhere
 
-    scp -P 30022 ${this_dir}/${box_file} ${upload_site_for_scp}/vagrant/box/${org}
+    scp -P 30022 -o StrictHostKeyChecking=no ${this_dir}/${box_file} ${upload_site_for_scp}/vagrant/box/${org}
     rm -f ${this_dir}/${box_file}
 }
 
@@ -113,7 +113,7 @@ function build_box() {
     ## uncomment below code, change the 'upload_site_for_scp', if you want to
     ## upload boxes somewhere
 
-    scp -P 30022 ${this_dir}/${box_file} ${upload_site_for_scp}/vagrant/box/${org}
+    scp -P 30022 -o StrictHostKeyChecking=no ${this_dir}/${box_file} ${upload_site_for_scp}/vagrant/box/${org}
     rm -f ${this_dir}/${box_file}
 }
 
