@@ -30,4 +30,4 @@ readonly script_dir=$(cd "${this_dir}/../../script";pwd)
 source $script_dir/boxes.sh
 
 import_box ${box_name____org_k8s_base}
-build_box_manual ${box_name____org_k8s_node2}
+build_box ${box_name____org_k8s_node2}

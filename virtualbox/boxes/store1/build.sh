@@ -31,4 +31,4 @@ source $script_dir/boxes.sh
 
 import_box ${box_name____org_ubuntu18}
 
-build_box_manual ${box_name____org_store1}
+build_box ${box_name____org_store1}
