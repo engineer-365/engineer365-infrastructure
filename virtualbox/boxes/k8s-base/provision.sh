@@ -31,9 +31,16 @@ set -e
 # turn off swap
 swapoff -a
 
+# keep swap off after reboot
 # in /etc/fstab, ensure to comment swap mount, like below
 #/swap.img      none    swap    sw      0       0
 sed -i '/swap/d' /etc/fstab
+# or:
+# cat /etc/fstab | grep swap | grep -v '#'
+# if [ "$?" -ne 0 ]
+# then
+#     sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+# fi
 
 echo "127.0.0.1 localhost" >> /etc/hosts
 echo "221.231.81.239  mirrors.aliyun.com" >> /etc/hosts
@@ -129,7 +136,7 @@ cat <<EOF | tee kubeadm-config.yaml
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: InitConfiguration
 localAPIEndpoint:
-  advertiseAddress: 192.168.50.151
+  advertiseAddress: k8s-master1.engineer365.org
   bindPort: 6443
 ---
 apiVersion: kubeadm.k8s.io/v1beta2
@@ -161,3 +168,10 @@ docker pull --quiet calico/typha:v3.17.1
 # docker pull --quiet calico/node:v3.10.2
 # docker pull --quiet calico/kube-controllers:v3.10.2
 # docker pull --quiet calico/typha:v3.10.2
+
+# set up completion
+echo "-------------------------------"
+echo "Set up bash completion"
+echo "-------------------------------"
+kubeadm completion bash > /etc/bash_completion.d/kubeadm
+kubectl completion bash > /etc/bash_completion.d/kubectl
