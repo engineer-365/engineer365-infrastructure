@@ -38,6 +38,8 @@ sed -i '/swap/d' /etc/fstab
 echo "127.0.0.1 localhost" >> /etc/hosts
 echo "221.231.81.239  mirrors.aliyun.com" >> /etc/hosts
 
+export DEBIAN_FRONTEND=noninteractive
+
 # Set up the Docker daemon
 # See https://kubernetes.io/docs/setup/production-environment/container-runtimes/#docker
 rm -f /etc/docker/daemon.json
@@ -95,7 +97,7 @@ sysctl --system
 # kubeadm: the command to bootstrap the cluster.
 # kubelet: the component that runs on all cluster machines and does things like starting pods and containers.
 # kubectl: the command line util to talk to your cluster.
-apt-get install -y apt-transport-https curl ebtables ethtool
+apt-get install -qq -y apt-transport-https curl ebtables ethtool
 
 # curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 curl -s https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -
@@ -105,11 +107,11 @@ curl -s https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add 
 #EOF
 echo "deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main" >> /etc/apt/sources.list.d/kubernetes.list
 
-apt-get update && apt-get upgrade
+apt-get update -qq && apt-get upgrade -qq
 
 # After installed, kubelet will keep restarting every few seconds, as it waits in a crashloop for kubeadm to tell it what to do.
 K8S_VER="1.20.1-00"
-apt-get install -y kubelet=${K8S_VER} kubeadm=${K8S_VER} kubectl=${K8S_VER}
+apt-get install -qq -y kubelet=${K8S_VER} kubeadm=${K8S_VER} kubectl=${K8S_VER}
 
 # exclude all Kubernetes packages from any system upgrades. This is because kubeadm and Kubernetes require special attention to upgrade.
 # see https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/

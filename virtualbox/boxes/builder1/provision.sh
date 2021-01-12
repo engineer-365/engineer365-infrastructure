@@ -47,7 +47,9 @@ echo "export JENKINS_PLUGIN_MGR_VER=2.5.0" >> /etc/profile
 
 # the nginx is used  to reverse-proxy as mirror ###############################
 
-#apt-get install -y nginx=1.14.0-0ubuntu1.7
+export DEBIAN_FRONTEND=noninteractive
+
+#apt-get -qq install -y nginx=1.14.0-0ubuntu1.7
 #mv /home/vagrant/files/etc/nginx/sites-enabled/* /etc/nginx/sites-enabled/
 #nginx -s reload
 #echo "export JENKINS_UC=http://updates.jenkins-ci.org" >> /etc/profile

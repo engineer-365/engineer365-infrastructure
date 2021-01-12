@@ -33,12 +33,14 @@ readonly dev_user=$4
 
 echo "export LC_ALL=en_US.UTF-8" >> /etc/profile
 
+export DEBIAN_FRONTEND=noninteractive
+
 # apt mirror ###################################################################
 cat > /etc/apt/sources.list <<EOF
 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse
 deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse
 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
-deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse 
+deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
 deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
@@ -51,15 +53,15 @@ echo "/etc/apt/sources.list: "
 cat /etc/apt/sources.list
 echo ""
 
-apt-get update
-apt-get -y upgrade
+apt-get update -qq
+apt-get upgrade -qq -y
 
 # set timezone
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone
 
 # TODO: more utilities
-apt-get install -y linux-headers-$(uname -r) build-essential gcc make python zip cmake uuid tree jq
-apt-get install -y apt-transport-https curl ebtables ethtool
+apt-get install -qq -y linux-headers-$(uname -r) build-essential gcc make python zip cmake uuid tree jq
+apt-get install -qq -y apt-transport-https curl ebtables ethtool
 
 # install docker ###############################################################
 mkdir /etc/docker/
