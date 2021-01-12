@@ -35,6 +35,11 @@ echo "export LC_ALL=en_US.UTF-8" >> /etc/profile
 
 export DEBIAN_FRONTEND=noninteractive
 
+# Set external DNS
+# sed -i -e 's/#DNS=/DNS=8.8.8.8/' /etc/systemd/resolved.conf
+# service systemd-resolved restart
+
+
 # apt mirror ###################################################################
 cat > /etc/apt/sources.list <<EOF
 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse
