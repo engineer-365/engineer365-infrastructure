@@ -122,6 +122,7 @@ systemctl restart ssh
 useradd -g ${admin_user} --home-dir /home/${admin_user} --create-home --shell /bin/bash ${admin_user}
 usermod -aG sudo ${admin_user}
 usermod -aG docker ${admin_user}
+usermod -aG ${org} ${admin_user}
 
 # echo "${admin_user}  ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 echo "${admin_user}  ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/${admin_user}
@@ -135,6 +136,7 @@ chown -R ${admin_user}:${admin_user} /home/${admin_user}/.ssh
 useradd --user-group --home-dir /home/${dev_user} --create-home --shell /bin/bash ${dev_user}
 usermod -aG sudo ${dev_user}
 usermod -aG docker ${dev_user}
+usermod -aG ${org} ${dev_user}
 
 echo "${dev_user}  ALL=(ALL) NOPASSWD:/usr/bin/docker,/usr/local/bin/docker-compose" | tee /etc/sudoers.d/${dev_user}
 
