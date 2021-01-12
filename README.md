@@ -169,7 +169,8 @@
    source /etc/profile
    ```
 
-  - vagrant-vbguest(0.28.0)是一个vagrant插件，用于安装VirtualBox Guest扩展
+
+  - vagrant-vbguest(0.29.0)是一个vagrant插件，用于安装VirtualBox Guest扩展
   ```shell
   vagrant plugin install vagrant-vbguest
   ```
