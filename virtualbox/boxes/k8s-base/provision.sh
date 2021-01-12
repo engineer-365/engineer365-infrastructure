@@ -136,7 +136,7 @@ cat <<EOF | tee kubeadm-config.yaml
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: InitConfiguration
 localAPIEndpoint:
-  advertiseAddress: k8s-master1.engineer365.org
+  advertiseAddress: 192.168.50.151
   bindPort: 6443
 ---
 apiVersion: kubeadm.k8s.io/v1beta2
