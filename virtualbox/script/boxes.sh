@@ -76,6 +76,7 @@ function build_box_manual() {
     local box_name_fq="${org}/${box_name}"
     local box_file="${box_name}.box"
 
+    vagrant destroy --force
     vagrant up
     vagrant ssh
 
@@ -101,6 +102,7 @@ function build_box() {
     local box_name_fq="${org}/${box_name}"
     local box_file="${box_name}.box"
 
+    vagrant destroy --force
     vagrant up
 
     rm -f ${this_dir}/${box_file}
