@@ -1,5 +1,4 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
+#!/bin/bash
 
 #
 #  MIT License
@@ -24,37 +23,11 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-puts "Vagrantfile variables ---------------------------------------------------"
+set -e
+set -x
 
-org=ENV["org"]
-puts "org: #{org}"
-
-vm_name=ENV["k8s_node1_host"]
-puts "vm name: #{vm_name}"
-
-base_box_name=ENV["box_name____org_k8s_base"]
-base_box_name_fq="#{org}/#{base_box_name}"
-puts "base box: #{base_box_name_fq}"
-
-ip=ENV["k8s_node1_ip"]
-puts "ip: #{ip}"
-
-puts "Vagrantfile variables ---------------------------------------------------"
-
-
-Vagrant.configure("2") do |config|
-
-  config.vm.box = base_box_name_fq
-  config.vm.hostname = vm_name
-  config.vm.network "private_network", ip: ip, hostname: true
-
-  config.vm.provider "virtualbox" do |p|
-     p.name = vm_name
-  end
-
-  config.vm.provision "shell" do |s|
-    s.path = "provision.sh"
-    s.args = ""
-  end
-
-end
+JOIN_CMD=/home/admin/kubeadm_join_command.sh
+scp -i /home/admin/.ssh/id_rsa -o StrictHostKeyChecking=no admin@k8s-master1.engineer365.org:${JOIN_CMD} ${JOIN_CMD}
+chmod u+x ${JOIN_CMD}
+sh ${JOIN_CMD}
+rm ${JOIN_CMD}

@@ -31,6 +31,10 @@ echo "192.168.50.151  k8s-master1" >> /etc/hosts
 # https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init
 kubeadm init --config=kubeadm-config.yaml --upload-certs
 
+# generate join command and save it for other nodes to get
+kubeadm token create --print-join-command >> /home/admin/kubeadm_join_command.sh
+chown -R admin:admin /home/admin/kubeadm_join_command.sh
+
 # verify
 # systemctl status kubelet
 # journalctl -xeu kubelet
