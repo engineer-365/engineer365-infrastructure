@@ -33,6 +33,7 @@ swapoff -a
 
 # in /etc/fstab, ensure to comment swap mount, like below
 #/swap.img      none    swap    sw      0       0
+sed -i '/swap/d' /etc/fstab
 
 echo "127.0.0.1 localhost" >> /etc/hosts
 echo "221.231.81.239  mirrors.aliyun.com" >> /etc/hosts
