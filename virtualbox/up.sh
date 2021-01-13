@@ -26,7 +26,13 @@
 set -x
 
 export readonly this_dir=$(cd "$(dirname $0)";pwd)
-readonly script_dir=$(cd "${this_dir}/../script";pwd)
+readonly script_dir=$(cd "${this_dir}/script";pwd)
 source $script_dir/boxes.sh
 
-up_vm ${box_name____org_store1}
+import_box ${box_name____org_builder1}
+import_box ${box_name____org_k8s_master1}
+import_box ${box_name____org_k8s_base}
+import_box ${box_name____org_store1}
+import_box ${box_name____org_store4}
+
+vagrant up

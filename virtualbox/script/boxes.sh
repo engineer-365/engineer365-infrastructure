@@ -25,6 +25,10 @@
 
 set -x
 
+if [ -z $script_dir ]; then
+  script_dir=$(cd "./script";pwd)
+fi
+
 export readonly virtualbox_dir=$(dirname $script_dir)
 
 source ${script_dir}/vars.sh

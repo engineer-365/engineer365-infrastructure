@@ -66,7 +66,7 @@ ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" 
 
 # TODO: more utilities
 apt-get install -qq -y linux-headers-$(uname -r) build-essential gcc make python zip cmake uuid tree jq
-apt-get install -qq -y apt-transport-https curl ebtables ethtool ca-certificates software-properties-common
+apt-get install -qq -y apt-transport-https bash-completion curl ebtables ethtool ca-certificates software-properties-common
 
 # install docker ###############################################################
 mkdir /etc/docker/
