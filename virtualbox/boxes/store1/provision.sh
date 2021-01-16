@@ -27,7 +27,9 @@ set -e
 set -x
 
 cp -r /home/vagrant/files/opt/* /opt/
-cd /opt/
 
+cd /opt/mysql-master
 docker-compose up -d --remove-orphans
 
+cd /opt/gitlab
+docker-compose up -d --remove-orphans
