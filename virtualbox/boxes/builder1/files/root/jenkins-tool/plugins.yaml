@@ -234,6 +234,9 @@ plugins:
  #- artifactId: mask-passwords # requires a greater version of Jenkins (2.272) than 2.269
  #  source:
  #     version: 3.0
+ - artifactId: gitea
+   source:
+      version: 1.2.1
 
 # example
 #  - artifactId: workflow-step-api
