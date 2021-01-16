@@ -65,20 +65,20 @@ virtual_machines = [
         :box => org + "/" + ENV["box_name____org_k8s_base"],
         :ip => ENV["k8s_node3_ip"]
     },
-    {
-        :name => "k8s_node4",
-        :host => ENV["k8s_node4_host"],
-        :type => "k8s_node",
-        :box => org + "/" + ENV["box_name____org_k8s_base"],
-        :ip => ENV["k8s_node4_ip"]
-    },
-    {
-        :name => "k8s_node5",
-        :host => ENV["k8s_node5_host"],
-        :type => "k8s_node",
-        :box => org + "/" + ENV["box_name____org_k8s_base"],
-        :ip => ENV["k8s_node5_ip"]
-    },
+    #{
+    #    :name => "k8s_node4",
+    #    :host => ENV["k8s_node4_host"],
+    #    :type => "k8s_node",
+    #    :box => org + "/" + ENV["box_name____org_k8s_base"],
+    #    :ip => ENV["k8s_node4_ip"]
+    #},
+    #{
+    #    :name => "k8s_node5",
+    #    :host => ENV["k8s_node5_host"],
+    #    :type => "k8s_node",
+    #    :box => org + "/" + ENV["box_name____org_k8s_base"],
+    #    :ip => ENV["k8s_node5_ip"]
+    #},
     {
         :name => "store1",
         :host => ENV["store1_host"],
