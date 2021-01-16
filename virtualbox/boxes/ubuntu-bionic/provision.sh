@@ -149,18 +149,28 @@ apt autoremove
 
 # set up root ca
 # install to Debian/Ubuntu Certificate Storage
-installedCaCrt=/etc/ssl/certs/My_Personal_Root_CA.pem
+installedCaCrt=/etc/ssl/certs/example_root_ca.pem
 cp /home/vagrant/certs/ca.crt ${installedCaCrt}
 chown root:root ${installedCaCrt}
 chmod 644 ${installedCaCrt}
 c_rehash
 update-ca-certificates
 
-installedCaKey=/etc/ssl/private/My_Personal_Root_CA.key
+installedCaKey=/etc/ssl/private/example_root_ca.key
 cp /home/vagrant/certs/ca.key ${installedCaKey}
 chown root:root ${installedCaKey}
 chmod 640 ${installedCaKey}
 
+# install server cert & key
+installedServerCrt=/etc/ssl/certs/example.com.pem
+cp /home/vagrant/certs/example.com.crt ${installedServerCrt}
+chown root:root ${installedServerCrt}
+chmod 644 ${installedServerCrt}
+
+installedServerKey=/etc/ssl/private/example.com.key
+cp /home/vagrant/certs/example.com.key ${installedServerKey}
+chown root:root ${installedServerKey}
+chmod 640 ${installedServerKey}
 
 echo "export download_site=${download_site}" >> /etc/profile
 
