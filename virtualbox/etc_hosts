@@ -108,3 +108,5 @@
 192.168.50.22    npm1
 192.168.50.23    npm2.example.com
 192.168.50.23    npm2
+192.168.50.21    gitlab.example.com
+192.168.50.21    gitlab
