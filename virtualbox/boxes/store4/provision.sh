@@ -41,7 +41,6 @@ tar -C /opt/ -xzf ${HARBOR_INSTALLER}
 cd /opt/harbor
 
 mv /home/vagrant/files/harbor/harbor.yml ./
-mv /home/vagrant/files/harbor/cert ./
 
 # Default installation without Notary, Clair, or Chart Repository Service
 ./install.sh
