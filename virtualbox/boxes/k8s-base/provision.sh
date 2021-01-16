@@ -143,7 +143,7 @@ apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 kubernetesVersion: v1.20.1
-controlPlaneEndpoint: k8s-master1.engineer365.org:6443
+controlPlaneEndpoint: k8s-master1.example.com:6443
 networking:
   dnsDomain: cluster.local
   serviceSubnet: 10.96.0.0/12

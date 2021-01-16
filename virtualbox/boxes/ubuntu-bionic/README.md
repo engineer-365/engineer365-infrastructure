@@ -2,7 +2,7 @@
 
   我们约定全部VirtualBox虚拟机都使用Ubuntu 18 (Bionic)。
   
-  下面步骤是构建一个[engineer365](https://github.com/engineer-365)共用的Ubuntu 18基础镜像:
+  下面步骤是构建一个[example.com](https://github.com/engineer-365)共用的Ubuntu 18基础镜像:
 
 1. 添加官方制作的ubuntu/bionic64的Vagrant box
 

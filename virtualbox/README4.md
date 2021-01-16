@@ -4,7 +4,7 @@
 
   执行：`./up.sh`
 
-## 验证：把域名docker.engineer365.org指向192.168.50.24, 然后用浏览器访问https://docker.engineer365.org:40444
+## 验证：把域名docker.example.com指向192.168.50.24, 然后用浏览器访问https://docker.example.com:443
 
 ## 后续设置操作请参照 [../../harbor](../../harbor)
 

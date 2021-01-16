@@ -25,7 +25,7 @@
 
 set -x
 
-export readonly org="engineer365.org"
+export readonly org="example.com"
 
 export readonly download_site="https://download.engineer365.org:40443"
 export readonly upload_site_for_scp="192.168.4.2:/hdd/engineer365/download"

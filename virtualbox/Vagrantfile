@@ -105,7 +105,7 @@ set -e
 set -x
 
 JOIN_CMD=/home/admin/kubeadm_join_command.sh
-scp -i /home/admin/.ssh/id_rsa -o StrictHostKeyChecking=no admin@k8s-master1.engineer365.org:${JOIN_CMD} ${JOIN_CMD}
+scp -i /home/admin/.ssh/id_rsa -o StrictHostKeyChecking=no admin@k8s-master1.example.com:${JOIN_CMD} ${JOIN_CMD}
 chmod u+x ${JOIN_CMD}
 sh ${JOIN_CMD}
 rm ${JOIN_CMD}
@@ -122,7 +122,7 @@ Vagrant.configure("2") do |config|
       config.vm.network "private_network", ip: virtual_machine[:ip], hostname: true
 
       if virtual_machine[:type] == "builder1"
-        config.vm.network "forwarded_port", guest: 40444, host: 40444
+        config.vm.network "forwarded_port", guest: 443, host: 443
       end
 
       config.vm.provider "virtualbox" do |p|

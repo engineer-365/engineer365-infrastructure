@@ -102,7 +102,7 @@ PREFIX=/$NAME
 
 # Allows tweaking the URL displayed at the bottom of Jenkins' UI
 # Default: https://jenkins.io
-FOOTER_URL=https://builder.engineer365.org:40443
+FOOTER_URL=https://builder.example.com:443
 
 # Timezone: see https://www.jenkins.io/doc/book/managing/change-system-timezone/
 TIME_ZONE="-Dorg.apache.commons.jelly.tags.fmt.timeZone=Asia/Shanghai"

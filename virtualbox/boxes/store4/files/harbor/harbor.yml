@@ -2,7 +2,7 @@
 
 # The IP address or hostname to access admin UI and registry service.
 # DO NOT use localhost or 127.0.0.1, because Harbor needs to be accessed by external clients.
-hostname: docker.engineer365.org
+hostname: docker.example.com
 
 # http related config
 http:
@@ -12,7 +12,7 @@ http:
 # https related config
 https:
   # https port for harbor, default is 443
-  port: 40444
+  port: 443
   # The path of cert and key files for nginx
   certificate: /opt/harbor/cert/fullchain.pem
   private_key: /opt/harbor/cert/privkey.pem
@@ -26,7 +26,7 @@ https:
 
 # Uncomment external_url if you want to enable external proxy
 # And when it enabled the hostname will no longer used
-external_url: https://docker.engineer365.org:40444
+external_url: https://docker.example.com:443
 
 # The initial password of Harbor admin
 # It only works in first time to install harbor

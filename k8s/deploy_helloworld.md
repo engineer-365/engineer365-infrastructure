@@ -9,7 +9,7 @@
 ##  2. 部署service (NodePort): `kubectl apply -f helloworld/nginx-service.yaml`
   查看：
   - `kubectl get service -o wide -l app=nginx`
-  - `curl http://k8s-node1.engineer365.org:32600`
+  - `curl http://k8s-node1.example.com:32600`
 
 ## 参考
   

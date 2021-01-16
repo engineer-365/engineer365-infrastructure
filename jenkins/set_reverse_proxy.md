@@ -1,6 +1,6 @@
 # 设置反向代理
 
-  例如公网访问域名是https://builder.engineer365.org:40443
+  例如公网访问域名是https://builder.example.com:443
   
 ## 用nginx做反向代理
 
@@ -17,7 +17,7 @@
   }
 
   server {
-    server_name builder.engineer365.org;
+    server_name builder.example.com;
 
     gzip off;
  
@@ -60,12 +60,12 @@
       proxy_set_header Connection ""; # Clear for keepalive
 
       # workaround for https://issues.jenkins-ci.org/browse/JENKINS-45651
-      add_header 'X-SSH-Endpoint' 'builder.engineer365.org:40022' always;
+      add_header 'X-SSH-Endpoint' 'builder.example.com:22' always;
     }
 
-    listen 40443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/builder.engineer365.org/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/builder.engineer365.org/privkey.pem; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/builder.example.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/builder.example.com/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
   }
