@@ -145,8 +145,22 @@ ssh-keygen -P "" -t rsa -C "${dev_user}@${org}" -f /home/${dev_user}/.ssh/id_rsa
 cat /home/${dev_user}/.ssh/id_rsa.pub >> /home/${dev_user}/.ssh/authorized_keys
 chown -R ${dev_user}:${dev_user} /home/${dev_user}/.ssh
 
-
 apt autoremove
+
+# set up root ca
+# install to Debian/Ubuntu Certificate Storage
+installedCaCrt=/etc/ssl/certs/My_Personal_Root_CA.pem
+cp /home/vagrant/certs/ca.crt ${installedCaCrt}
+chown root:root ${installedCaCrt}
+chmod 644 ${installedCaCrt}
+c_rehash
+update-ca-certificates
+
+installedCaKey=/etc/ssl/private/My_Personal_Root_CA.key
+cp /home/vagrant/certs/ca.key ${installedCaKey}
+chown root:root ${installedCaKey}
+chmod 640 ${installedCaKey}
+
 
 echo "export download_site=${download_site}" >> /etc/profile
 
