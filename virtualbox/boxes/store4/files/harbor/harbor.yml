@@ -12,7 +12,7 @@ http:
 # https related config
 https:
   # https port for harbor, default is 443
-  port: 443
+  port: 11443
   # The path of cert and key files for nginx
   certificate: /opt/harbor/cert/fullchain.pem
   private_key: /opt/harbor/cert/privkey.pem

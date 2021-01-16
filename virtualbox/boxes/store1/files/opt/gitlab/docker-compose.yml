@@ -40,8 +40,8 @@ services:
         gitlab_rails['time_zone'] = 'Beijing'
         gitlab_rails['gitlab_ssh_host'] = 'gitlab.example.com'
     ports:
-      - '443:443'
-      - '22:22'
+      - '10443:443'
+      - '10022:22'
     volumes:
       - '/etc/ssl/certs/example.com.pem:/etc/gitlab/ssl/gitlab.example.com.pem:ro'
       - '/etc/ssl/certs/example.com.key:/etc/gitlab/ssl/gitlab.example.com.key:ro'
