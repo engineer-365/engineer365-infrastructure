@@ -290,9 +290,9 @@ echo "${npm2_ip}    ${npm2_host}" >> $etc_hosts_file
 echo "${npm2_ip}    npm2" >> $etc_hosts_file
 
 
-export readonly gitlab1_ip=$store1_ip
-export readonly gitlab1_host="gitlab1.${org}"
-echo "${gitlab1_ip}    ${gitlab1_host}" >> $etc_hosts_file
-echo "${gitlab1_ip}    gitlab1" >> $etc_hosts_file
+export readonly gitlab_ip=$store1_ip
+export readonly gitlab_host="gitlab.${org}"
+echo "${gitlab_ip}    ${gitlab_host}" >> $etc_hosts_file
+echo "${gitlab_ip}    gitlab" >> $etc_hosts_file
 
 set -x
