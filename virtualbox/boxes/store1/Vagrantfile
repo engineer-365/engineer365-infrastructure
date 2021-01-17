@@ -47,8 +47,8 @@ Vagrant.configure("2") do |config|
   config.vm.box = base_box_name_fq
   config.vm.hostname = vm_name
   config.vm.network "private_network", ip: ip, hostname: true
-  config.vm.network "forwarded_port", guest: 10443, host: 10443
-  config.vm.network "forwarded_port", guest: 10022, host: 10022
+  config.vm.network "forwarded_port", guest: 40143, host: 40143
+  config.vm.network "forwarded_port", guest: 40122, host: 40122
   # config.vm.synced_folder "./data", "/data", create: true
 
   config.disksize.size = '200GB'

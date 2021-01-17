@@ -32,16 +32,16 @@ services:
     container_name: gitlab_ee
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.example.com:10443'
-        gitlab_rails['gitlab_shell_ssh_port'] = 10022
+        external_url 'https://gitlab.example.com:40143'
+        gitlab_rails['gitlab_shell_ssh_port'] = 40122
         nginx['ssl_certificate'] = "/etc/gitlab/ssl/#{node['fqdn']}.pem"
         nginx['ssl_protocols'] = "TLSv1 TLSv1.1 TLSv1.2"
         nginx['ssl_ciphers'] = "ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4"
         gitlab_rails['time_zone'] = 'Beijing'
         gitlab_rails['gitlab_ssh_host'] = 'gitlab.example.com'
     ports:
-      - '10443:443'
-      - '10022:22'
+      - '40143:443'
+      - '40122:22'
     volumes:
       - '/etc/ssl/certs/example.com.pem:/etc/gitlab/ssl/gitlab.example.com.pem:ro'
       - '/etc/ssl/private/example.com.key:/etc/gitlab/ssl/gitlab.example.com.key:ro'
