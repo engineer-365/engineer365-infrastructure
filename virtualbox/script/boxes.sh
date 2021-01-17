@@ -227,6 +227,9 @@ function import_box() {
     local box_name=$1
     local box_name_fq="${org}/${box_name}"
 
+    log_info "*********************************************************************************************************"
+    log_info "importing box: " $box_name_fq
+
     import_raw_box ${org} ${box_name} ${clean}
 }
 
@@ -236,6 +239,10 @@ function build_box() {
 
     local box_name=$1
     local box_name_fq="${org}/${box_name}"
+    
+    log_info "*********************************************************************************************************"
+    log_info "building box: " $box_name_fq
+
     local box_file="${box_name}.box"
 
     vagrant halt
