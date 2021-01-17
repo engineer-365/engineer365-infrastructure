@@ -12,15 +12,15 @@
     - 为每一个团队成员创建一个用户账号
     - 为builder(jenkins)创建一个用户账号
       - 用户名：engineer365-builder
-      - 邮箱：engineer365-builder@mail.example.com
+      - 邮箱：engineer365-builder@mail.engineer365.org
       - 密码： ***
     - 为deployer(k8s)创建一个用户账号
       - 用户名：engineer365-deployer
-      - 邮箱：engineer365-deployer@mail.example.com
+      - 邮箱：engineer365-deployer@mail.engineer365.org
       - 密码： ***
   
   - 选择左侧菜单“项目”/“新建项目”
-    - 使用Github organization名字创建项目名称：example.com，访问级别：不公开
+    - 使用Github organization名字创建项目名称：engineer365.org，访问级别：不公开
     - 创建后点击进入该项目，选择“成员”tab，点击“+成员”
       - 把每一个团队成员都加入成为“受限访客”（Limited Guest）。
       - 把engineer365-builder用户加入成为“开发者”（Developer）。
