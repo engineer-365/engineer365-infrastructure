@@ -26,6 +26,7 @@
 etc_hosts_file=$virtualbox_dir/etc_hosts
 rm -f $etc_hosts_file
 
+log_info "write ip and hosts to $etc_hosts_file"
 
 # ip and host
 echo "127.0.0.1 localhost" >> $etc_hosts_file

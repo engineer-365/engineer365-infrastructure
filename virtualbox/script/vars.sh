@@ -23,14 +23,30 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
+log_info "---------------------------------------------------------------------"
+log_info "Variables:"
+
 export readonly org="example.com"
+log_info "\t  org:" ${org}
 
 export readonly download_site="https://download.engineer365.org:40443"
+log_info "\t  download_site:" ${download_site}
+
 export readonly scp_upload_path="192.168.4.2:/hdd/engineer365/download/vagrant/box/${org}"
+log_info "\t  scp_upload_path:" ${scp_upload_path}
+
 export readonly scp_upload_port="30022"
+log_info "\t  scp_upload_port:" ${scp_upload_port}
+
 export readonly box_download_path="${download_site}/vagrant/box"
+log_info "\t  box_download_path:" ${box_download_path}
+
 
 # users
 export readonly admin_user="admin"
-export readonly dev_user="dev"
+log_info "\t  admin_user:" ${admin_user}
 
+export readonly dev_user="dev"
+log_info '\t  dev_user:' ${dev_user}
+
+log_info "---------------------------------------------------------------------"
