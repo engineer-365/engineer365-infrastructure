@@ -75,10 +75,16 @@ echo "${proxy2_ip}    ${proxy2_host}" >> $etc_hosts_file
 echo "${proxy2_ip}    proxy2" >> $etc_hosts_file
 
 
-export readonly builder1_ip="192.168.50.121"
-export readonly builder1_host="builder1.${org}"
+export readonly builder_ip="192.168.50.121"
+export readonly builder_host="builder.${org}"
+echo "${builder_ip}    ${builder_host}" >> $etc_hosts_file
+echo "${builder_ip}    builder" >> $etc_hosts_file
+
+export readonly builder1_ip=${builder_ip}
+export readonly builder1_host=${builder_host}
 echo "${builder1_ip}    ${builder1_host}" >> $etc_hosts_file
 echo "${builder1_ip}    builder1" >> $etc_hosts_file
+
 export readonly builder2_ip="192.168.50.122"
 export readonly builder2_host="builder2.${org}"
 echo "${builder2_ip}    ${builder2_host}" >> $etc_hosts_file

@@ -16,7 +16,9 @@
 192.168.50.101    proxy1
 192.168.50.102    proxy2.example.com
 192.168.50.102    proxy2
-192.168.50.121    builder1.example.com
+192.168.50.121    builder.example.com
+192.168.50.121    builder
+192.168.50.121    builder.example.com
 192.168.50.121    builder1
 192.168.50.122    builder2.example.com
 192.168.50.122    builder2

@@ -49,9 +49,11 @@ echo "export JENKINS_PLUGIN_MGR_VER=2.5.0" >> /etc/profile
 
 export DEBIAN_FRONTEND=noninteractive
 
-#apt-get -qq install -y nginx=1.14.0-0ubuntu1.7
-#mv /home/vagrant/files/etc/nginx/sites-enabled/* /etc/nginx/sites-enabled/
-#nginx -s reload
+apt-get -qq install -y nginx=1.14.0-0ubuntu1.7
+mkdir -p /var/log/nginx/builder
+mv /home/vagrant/files/etc/nginx/sites-enabled/* /etc/nginx/sites-enabled/
+nginx -s reload
+
 #echo "export JENKINS_UC=http://updates.jenkins-ci.org" >> /etc/profile
 #echo "export JENKINS_URL=http://localhost:8080" >> /etc/profile
 echo "export JENKINS_UC_DOWNLOAD=https://mirrors.tuna.tsinghua.edu.cn/jenkins/" >> /etc/profile
@@ -84,7 +86,7 @@ ln -s /root/jenkins-tool/jenkins-plugin-manager-${JENKINS_PLUGIN_MGR_VER}.jar /r
 # optional - useful for jenkins adminstration work later
 # wget --quiet ${JENKINS_URL}/jnlpJars/jenkins-cli.jar
 
-# uncomment below lines to install plugin by yourself 
+## uncomment below lines to install plugin by yourself 
 ## begin -----------------------------------------------------------------------
 ## see https://github.com/jenkinsci/plugin-installation-manager-tool
 ## download plugin to /usr/share/jenkins/ref/plugins
@@ -109,9 +111,8 @@ wget --quiet ${download_site}/jenkins/experimental-update-center-2.269.json -O /
 wget --quiet ${download_site}/jenkins/plugin-versions.json                  -O /root/.cache/jenkins-plugin-management-cli/plugin-versions.json
 wget --quiet ${download_site}/jenkins/update-center-2.269.json              -O /root/.cache/jenkins-plugin-management-cli/update-center-2.269.json
 wget --quiet ${download_site}/jenkins/plugins.tar.gz                        -O /root/.cache/jenkins-plugin-management-cli/plugins.tar.gz
-tar -C /var/lib/jenkins/ -xvzf /root/.cache/jenkins-plugin-management-cli/plugins.tar.gz
-
-## end -----------------------------------------------------------------------
+tar -C /var/lib/jenkins/ -xzf /root/.cache/jenkins-plugin-management-cli/plugins.tar.gz
+# end -----------------------------------------------------------------------
 
 
 
@@ -135,4 +136,5 @@ JENKINS_USER_ID=$(id -u jenkins)
 mkdir -p /run/user/${JENKINS_USER_ID}
 ln -s /var/run/docker.sock  /run/user/${JENKINS_USER_ID}/docker.sock
 chown -R jenkins:jenkins /run/user/111/docker.sock
+
 
