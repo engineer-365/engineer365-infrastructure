@@ -55,19 +55,19 @@ function _change_org_in_dir() {
   local local_dir=$3
 
   grep_cmd="grep ${old_str} -rl ${local_dir} \
-           --exclude \"*.zip\" \
-           --exclude \"*.gz\" \
-           --exclude \"*.ovf\" \
-           --exclude \"*.crt\" \
-           --exclude \"*.csr\" \
-           --exclude \"*.p12\" \
-           --exclude \"*.pem\" \
-           --exclude \"*.key\" \
-           --exclude \"*.png\" \
-           --exclude \"calico.yaml\" \
-           --exclude \"tigera-operator.yaml\" \
-           --exclude-dir \".git\" \
-           --exclude-dir \".vagrant\""
+           --exclude *.zip \
+           --exclude *.gz \
+           --exclude *.ovf \
+           --exclude *.crt \
+           --exclude *.csr \
+           --exclude *.p12 \
+           --exclude *.pem \
+           --exclude *.key \
+           --exclude *.png \
+           --exclude calico.yaml \
+           --exclude tigera-operator.yaml \
+           --exclude-dir .git \
+           --exclude-dir .vagrant"
 
   for i in `find ${local_dir}` ;do NN=$(echo $i | sed "s/${old_str}/${new_str}/g") ; if [[ "$NN" != "$i" ]]; then mv "$i" "$NN" ;fi ;done
   

@@ -4,7 +4,7 @@
 
   执行：`./up.sh`
 
-## 验证：把域名docker.example.com指向192.168.50.24, 然后用浏览器访问https://docker.example.com:443
+## 验证：把域名docker.example.com指向192.168.50.24, 然后用浏览器访问https://docker.example.com:40243
 
 ## 后续设置操作请参照 [../../harbor](../../harbor)
 
