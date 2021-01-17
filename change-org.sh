@@ -49,10 +49,12 @@ if [[ "${org}" == "." || "$org" == "example.com" ]]; then
   exit 1
 fi
 
-function change_org_in_dir() {
-  local local_dir=$1
+function _change_org_in_dir() {
+  local old_str=$1
+  local new_str=$2
+  local local_dir=$3
 
-  grep_cmd="grep example.com -rl ${local_dir} \
+  grep_cmd="grep ${old_str} -rl ${local_dir} \
            --exclude \"*.zip\" \
            --exclude \"*.gz\" \
            --exclude \"*.ovf\" \
@@ -65,20 +67,38 @@ function change_org_in_dir() {
            --exclude-dir \".git\" \
            --exclude-dir \".vagrant\""
 
-  for i in `find ${local_dir}` ;do NN=$(echo $i | sed "s/example.com/${org}/g") ; if [[ "$NN" != "$i" ]]; then mv "$i" "$NN" ;fi ;done
+  for i in `find ${local_dir}` ;do NN=$(echo $i | sed "s/${old_str}/${new_str}/g") ; if [[ "$NN" != "$i" ]]; then mv "$i" "$NN" ;fi ;done
   
-  sed -i "s/example.com/${org}/g" `${grep_cmd}`
+  sed -i "s/${old_str}/${new_str}/g" `${grep_cmd}`
+}
+
+function change_org_in_dir() {
+  local local_dir=$1
+
+  _change_org_in_dir "example.com" ${org} ${local_dir}
+  _change_org_in_dir "example" ${org_title} ${local_dir}
+}
+
+function _change_org_in_file() {
+  local old_str=$1
+  local new_str=$2
+  local local_file=$3
+
+  sed -i "s/$old_str}/${new_str}/g" "${local_file}"
 }
 
 function change_org_in_file() {
   local local_file=$1
 
-  sed -i "s/example.com/${org}/g" "${local_file}"
+  _change_org_in_file "example.com" ${org} ${local_file}
+  _change_org_in_file "example" ${org_title} ${local_file}
 }
 
 git checkout -b "${org}"
 
-change_org_in_dir ${this_dir}/gitlab
+change_org_in_dir "example.com" "${org}" ${this_dir}/gitlab
+change_org_in_dir "example" "${org_title}" ${this_dir}/gitlab
+
 change_org_in_dir ${this_dir}/harbor
 change_org_in_dir ${this_dir}/jenkins
 change_org_in_dir ${this_dir}/k8s
