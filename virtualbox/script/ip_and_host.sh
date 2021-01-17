@@ -23,8 +23,6 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-set +x
-
 etc_hosts_file=$virtualbox_dir/etc_hosts
 rm -f $etc_hosts_file
 
@@ -301,4 +299,3 @@ export readonly gitlab_host="gitlab.${org}"
 echo "${gitlab_ip}    ${gitlab_host}" >> $etc_hosts_file
 echo "${gitlab_ip}    gitlab" >> $etc_hosts_file
 
-set -x

@@ -23,12 +23,11 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-set -x
-
 export readonly org="example.com"
 
 export readonly download_site="https://download.engineer365.org:40443"
-export readonly upload_site_for_scp="192.168.4.2:/hdd/engineer365/download"
+export readonly scp_upload_path="192.168.4.2:/hdd/engineer365/download/vagrant/box/${org}"
+export readonly scp_upload_port="30022"
 export readonly box_download_path="${download_site}/vagrant/box"
 
 # users

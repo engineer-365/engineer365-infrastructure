@@ -1,4 +1,5 @@
 /data/
-/.vagrant/
+.vagrant/
 *.box 
+*.box.counter
 *.log

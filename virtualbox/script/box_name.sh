@@ -23,8 +23,6 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-set +x
-
 # base boxes
 export readonly box_name____hashicorp_ubuntu_bionic="ubuntu-bionic-20201201"
 export readonly box_name____org_ubuntu18="ubuntu18-20201211"
@@ -57,5 +55,3 @@ export readonly box_name____org_k8s_node2="k8s-node2-20201211"
 export readonly box_name____org_k8s_node3="k8s-node3-20201211"
 export readonly box_name____org_k8s_node4="k8s-node4-20201211"
 export readonly box_name____org_k8s_node5="k8s-node5-20201211"
-
-set -x

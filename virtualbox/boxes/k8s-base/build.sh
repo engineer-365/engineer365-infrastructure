@@ -23,8 +23,6 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-set -x
-
 readonly this_dir=$(cd "$(dirname $0)";pwd)
 readonly script_dir=$(cd "${this_dir}/../../script";pwd)
 source $script_dir/boxes.sh

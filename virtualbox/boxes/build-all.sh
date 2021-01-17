@@ -23,34 +23,31 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-set -e
-set -x
-
-readonly this_dir=$(cd "$(dirname $0)";pwd)
+this_dir=$(cd "$(dirname $0)";pwd)
 
 cd ${this_dir}/ubuntu-bionic
-./build.sh
+./build.sh $*
 
 
 cd ${this_dir}/builder
-./build.sh
+./build.sh $*
 
 
 cd ${this_dir}/builder1
-./build.sh
+./build.sh $*
 
 
 cd ${this_dir}/k8s-base
-./build.sh
+./build.sh $*
 
 
 cd ${this_dir}/k8s-master1
-./build.sh
+./build.sh $*
 
 
 cd ${this_dir}/store1
-./build.sh
+./build.sh $*
 
 
 cd ${this_dir}/store4
-./build.sh
+./build.sh $*
