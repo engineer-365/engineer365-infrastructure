@@ -223,7 +223,9 @@ function build_box() {
     local box_name_fq="${org}/${box_name}"
     local box_file="${box_name}.box"
 
+    vagrant halt
     vagrant destroy --force
+  
     vagrant up
 
     if [ ${opt_interactive} == "true" ]; then
@@ -234,6 +236,8 @@ function build_box() {
     vagrant package --output ${this_dir}/${box_file}
 
     vagrant box add ${this_dir}/${box_file} --name ${box_name_fq} --force
+
+    vagrant halt
     vagrant destroy --force
     rm -rf ${this_dir}/.vagrant
 
