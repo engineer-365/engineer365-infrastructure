@@ -77,24 +77,43 @@ chown -R jenkins:jenkins /etc/default/jenkins
 mv /home/vagrant/files/var/lib/jenkins/casc /var/lib/jenkins/
 mv /home/vagrant/files/root/jenkins-tool/ /root/ && cd /root/jenkins-tool/
 
+
 wget --quiet ${download_site}/jenkins/jenkins-plugin-manager-${JENKINS_PLUGIN_MGR_VER}.jar
 ln -s /root/jenkins-tool/jenkins-plugin-manager-${JENKINS_PLUGIN_MGR_VER}.jar /root/jenkins-tool/jenkins-plugin-manager.jar
 
 # optional - useful for jenkins adminstration work later
 # wget --quiet ${JENKINS_URL}/jnlpJars/jenkins-cli.jar
 
-# install plugin ##############################################################
-# see https://github.com/jenkinsci/plugin-installation-manager-tool
-# download plugin to /usr/share/jenkins/ref/plugins
-# java -jar jenkins-plugin-manager-*.jar --war /your/path/to/jenkins.war --plugin-file /your/path/to/plugins.txt --plugins delivery-pipeline-plugin:1.3.2 deployit-plugin
-java -jar /root/jenkins-tool/jenkins-plugin-manager.jar \
-     --verbose \
-     --jenkins-update-center https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/dynamic-${JENKINS_VER}/update-center.actual.json \
-     --jenkins-experimental-update-center https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/experimental/update-center.actual.json \
-     --jenkins-plugin-info https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/current/plugin-versions.json \
-     --plugin-file /root/jenkins-tool/plugins.yaml \
-     --plugin-download-directory /var/lib/jenkins/plugins
+# uncomment below lines to install plugin by yourself 
+## begin -----------------------------------------------------------------------
+## see https://github.com/jenkinsci/plugin-installation-manager-tool
+## download plugin to /usr/share/jenkins/ref/plugins
+## java -jar jenkins-plugin-manager-*.jar --war /your/path/to/jenkins.war --plugin-file /your/path/to/plugins.txt --plugins delivery-pipeline-plugin:1.3.2 deployit-plugin
+#java -jar /root/jenkins-tool/jenkins-plugin-manager.jar \
+#     --verbose \
+#     --jenkins-update-center https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/dynamic-${JENKINS_VER}/update-center.actual.json \
+#     --jenkins-experimental-update-center https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/experimental/update-center.actual.json \
+#     --jenkins-plugin-info https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/current/plugin-versions.json \
+#     --plugin-file /root/jenkins-tool/plugins.yaml \
+#     --plugin-download-directory /var/lib/jenkins/plugins
 #     --skip-failed-plugins
+## end -----------------------------------------------------------------------
+
+
+
+# comment below lines to install plugin by yourself 
+# begin -----------------------------------------------------------------------
+# see https://github.com/jenkinsci/plugin-installation-manager-tool
+mkdir -p /root/.cache/jenkins-plugin-management-cli/
+wget --quiet ${download_site}/jenkins/experimental-update-center-2.269.json -O /root/.cache/jenkins-plugin-management-cli/experimental-update-center-2.269.json
+wget --quiet ${download_site}/jenkins/plugin-versions.json                  -O /root/.cache/jenkins-plugin-management-cli/plugin-versions.json
+wget --quiet ${download_site}/jenkins/update-center-2.269.json              -O /root/.cache/jenkins-plugin-management-cli/update-center-2.269.json
+wget --quiet ${download_site}/jenkins/plugins.tar.gz                        -O /root/.cache/jenkins-plugin-management-cli/plugins.tar.gz
+tar -C /var/lib/jenkins/ -xvzf /root/.cache/jenkins-plugin-management-cli/plugins.tar.gz
+
+## end -----------------------------------------------------------------------
+
+
 
 # enable jenkins to talk with docker ##########################################
 usermod -aG sudo jenkins

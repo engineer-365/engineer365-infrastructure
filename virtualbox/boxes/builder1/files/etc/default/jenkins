@@ -107,7 +107,8 @@ FOOTER_URL=https://builder.example.com:443
 # Timezone: see https://www.jenkins.io/doc/book/managing/change-system-timezone/
 TIME_ZONE="-Dorg.apache.commons.jelly.tags.fmt.timeZone=Asia/Shanghai"
 
-JENKINS_UC_DOWNLOAD=https://mirrors.tuna.tsinghua.edu.cn/jenkins/
+# uncomment below line to set up update center mirror
+# JENKINS_UC_DOWNLOAD=https://mirrors.tuna.tsinghua.edu.cn/jenkins/
 
 JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT"
 
