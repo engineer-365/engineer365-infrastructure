@@ -54,6 +54,7 @@ function change_org_in_dir() {
 
   grep_cmd="grep example.com -rl ${local_dir} \
            --exclude \"*.zip\" \
+           --exclude \"*.gz\" \
            --exclude \"*.ovf\" \
            --exclude \"*.crt\" \
            --exclude \"*.csr\" \
@@ -64,18 +65,18 @@ function change_org_in_dir() {
            --exclude-dir \".git\" \
            --exclude-dir \".vagrant\""
 
-  #${grep_cmd}
-  for i in `find ${local_dir}` ;do NN=$(echo $i | sed "s/example.com/${org}/g") ;if [ "$NN" == "$i" ] ;mv "$i" "$NN";done
-  #sed -i "s/example.com/${org}/g" `${grep_cmd}`
+  for i in `find ${local_dir}` ;do NN=$(echo $i | sed "s/example.com/${org}/g") ; if [[ "$NN" != "$i" ]]; then mv "$i" "$NN" ;fi ;done
+  
+  sed -i "s/example.com/${org}/g" `${grep_cmd}`
 }
 
 function change_org_in_file() {
   local local_file=$1
 
-  #sed -i "s/example.com/${org}/g" "${local_file}"
+  sed -i "s/example.com/${org}/g" "${local_file}"
 }
 
-#git checkout -b "${org}"
+git checkout -b "${org}"
 
 change_org_in_dir ${this_dir}/gitlab
 change_org_in_dir ${this_dir}/harbor
