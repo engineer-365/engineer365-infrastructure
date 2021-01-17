@@ -2,7 +2,7 @@
 # 系统初始化设置
 ## 设置admin的密码
   
-  打开浏览器，访问https://docker.example.com:443
+  打开浏览器，访问https://docker.example.com:40243
     - 用户名：admin，初始密码Engineer12345
     - 右上角菜单：admin -> 修改密码
 
@@ -27,7 +27,7 @@
       - 关于项目成员角色，参见https://goharbor.io/docs/2.0.0/administration/managing-users/user-permissions-by-role/
 
    - 从这个docker registry拉取镜像时前需要一次性登录
-     - docker login -u 用户名 docker.example.com:443
+     - docker login -u 用户名 docker.example.com:40243
      - 配置jenkins，使用engineer365-builder账号创建一个credential
 
 ## 重启和升级：

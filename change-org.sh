@@ -64,6 +64,8 @@ function _change_org_in_dir() {
            --exclude \"*.pem\" \
            --exclude \"*.key\" \
            --exclude \"*.png\" \
+           --exclude \"calico.yaml\" \
+           --exclude \"tigera-operator.yaml\" \
            --exclude-dir \".git\" \
            --exclude-dir \".vagrant\""
 

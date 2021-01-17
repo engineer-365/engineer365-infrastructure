@@ -7,7 +7,7 @@
   - 修改Jenkins启动参数，包括：
     - 设置清华大学站为Jenkins更新镜像站
     - 设置Jenkins使用headless模式
-    - 设置`FOOTER_URL=https://builder.example.com:443`
+    - 设置`FOOTER_URL=https://builder.example.com:40043`
     - 设置Jenkins的timezone为`Asia/Shanghai`
     - 设置Jenkins使用CasC(Configuration As Code模式加载设置，这些设置包括：
       - 设置`JDK 11`

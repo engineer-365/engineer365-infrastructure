@@ -4,7 +4,7 @@
 
   执行：`./up.sh`
 
-## Demo：https://builder.example.com:443
+## Demo：https://builder.engineer365.org:40043
 
 ## 第一次启动还需以下操作（一次性）
 

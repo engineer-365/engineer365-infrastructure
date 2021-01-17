@@ -32,7 +32,7 @@ services:
 
   server:
     container_name: fleashop-server
-    image: docker.example.com:443/engineer365/fleashop:latest
+    image: docker.example.com:40243/engineer365/fleashop:latest
     restart: always
     env_file: ./fleashop.env
     ports:

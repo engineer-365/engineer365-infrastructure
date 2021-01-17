@@ -237,8 +237,6 @@ plugins:
  - artifactId: gitea
    source:
       version: 1.2.1
-
-# example
 #  - artifactId: workflow-step-api
 #    groupId: org.jenkins-ci.plugins.workflow
 #    source:
