@@ -23,49 +23,65 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-set -e
-set -x
-
 readonly this_dir=$(cd "$(dirname $0)";pwd)
 
-echo "this script will checkout to new branch then replace example organzation with yours"
+echo "This script will checkout a new branch then replace example organzation with yours"
 
-read -p "Your organization title (e.g. 'example') ? " org_title
-read -p "Your organization suffix (e.g. 'com') ? " org_suffix
-read -p "Confirm your organization: (${org_title}.${org_suffix})" org
+read -p "Your organization title (default: 'example') ? " org_title
+if [[ "$org_title" == "" ]]; then
+  org_title="example"
+fi
 
-if [ -z "${org}" ]; then
+read -p "Your organization suffix (default: 'com') ? " org_suffix
+if [[ "$org_suffix" == "" ]]; then
+  org_suffix="com"
+fi
+
+read -p "Confirm your organization: (default: ${org_title}.${org_suffix})" org
+if [[ "$org" == "" ]]; then
+  org="${org_title}.${org_suffix}"
+fi
+
+echo "Your orgnization: " "$org"
+
+if [[ "${org}" == "." || "$org" == "example.com" ]]; then
+  echo "No change"
   exit 1
 fi
 
 function change_org_in_dir() {
   local local_dir=$1
-  local file_pattern=$2 # e.g., "*.html"
 
-  sed -i "s/example.com/${org}/g" \
-      `grep "example.com" -rl "${local_dir}" \
-           --include "${file_pattern}" \
-           --exclude "*.crt" \
-           --exclude "*.csr" \
-           --exclude "*.p12" \
-           --exclude "*.pem" \
-           --exclude "*.key" \
-           --exclude "*.png" \
-           --exclude-dir ".git" \ 
-           --exclude-dir ".vagrant"`
+  grep_cmd="grep example.com -rl ${local_dir} \
+           --exclude \"*.zip\" \
+           --exclude \"*.ovf\" \
+           --exclude \"*.crt\" \
+           --exclude \"*.csr\" \
+           --exclude \"*.p12\" \
+           --exclude \"*.pem\" \
+           --exclude \"*.key\" \
+           --exclude \"*.png\" \
+           --exclude-dir \".git\" \
+           --exclude-dir \".vagrant\""
+
+  #${grep_cmd}
+  for i in `find ${local_dir}` ;do NN=$(echo $i | sed "s/example.com/${org}/g") ;mv "$i" "$NN";done
+  #sed -i "s/example.com/${org}/g" `${grep_cmd}`
 }
 
 function change_org_in_file() {
   local local_file=$1
 
-  sed -i "s/example.com/${org}/g" "${local_file}"
+  #sed -i "s/example.com/${org}/g" "${local_file}"
 }
 
-git checkout -b "${org}"
+#git checkout -b "${org}"
 
-change_org_in_dir ${this_dir}/gitlab/
-change_org_in_dir ${this_dir}/harbor/
-change_org_in_dir ${this_dir}/jenkins/
-change_org_in_dir ${this_dir}/k8s/
-change_org_in_dir ${this_dir}/mysql/
-change_org_in_dir ${this_dir}/virtualbox/
+change_org_in_dir ${this_dir}/gitlab
+change_org_in_dir ${this_dir}/harbor
+change_org_in_dir ${this_dir}/jenkins
+change_org_in_dir ${this_dir}/k8s
+change_org_in_dir ${this_dir}/mysql
+change_org_in_dir ${this_dir}/virtualbox
+change_org_in_file ${this_dir}/https/example.com.sh
+change_org_in_file ${this_dir}/README.md

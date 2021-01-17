@@ -98,7 +98,7 @@ unclassified:
   gitHubConfiguration:
     apiRateLimitChecker: ThrottleForNormalize
   gitHubPluginConfig:
-    hookUrl: "https://builder.example.com:443/github-webhook/"
+    hookUrl: "https://builder.example.com:40043/github-webhook/"
   gitLabConnectionConfig:
     connections:
     - clientBuilderId: "autodetect"
