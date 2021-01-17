@@ -65,7 +65,7 @@ function change_org_in_dir() {
            --exclude-dir \".vagrant\""
 
   #${grep_cmd}
-  for i in `find ${local_dir}` ;do NN=$(echo $i | sed "s/example.com/${org}/g") ;mv "$i" "$NN";done
+  for i in `find ${local_dir}` ;do NN=$(echo $i | sed "s/example.com/${org}/g") ;if [ "$NN" == "$i" ] ;mv "$i" "$NN";done
   #sed -i "s/example.com/${org}/g" `${grep_cmd}`
 }
 
