@@ -27,7 +27,7 @@ opt_clean='false'
 opt_interactive='false'
 opt_upload='false'
 opt_verbose='false'
-opt_size='mini'
+opt_size='mid'
 
 # parse options
 # begin -----------------------------------------------------------------------
@@ -41,17 +41,31 @@ eval set -- "${ARGS}"
 
 
 function log_info() {
+  PURPLE='\033[1;35m'
   BLUE='\033[1;34m'
   NC='\033[0m'
+  local TM=`date "+%Y-%m-%d %H:%M:%S"`
 
-  echo -e ${BLUE}$*${NC}
+  echo -e "${PURPLE}<${TM}>${BLUE} $*${NC}"
 }
 
 function log_error() {
   PURPLE='\033[1;35m'
   NC='\033[0m'
+  local TM=`date "+%Y-%m-%d %H:%M:%S"`
 
-  echo -e ${PURPLE}$*${NC}
+  echo -e "${PURPLE}<${TM}> $*${NC}"
+}
+
+function log_block() {
+  PURPLE='\033[1;35m'
+  NC='\033[0m'
+  local TM=`date "+%Y-%m-%d %H:%M:%S"`
+
+  echo -e "${PURPLE}*******************************************************************${NC}"
+  echo -e "${PURPLE}* $*${NC}"
+  echo -e "${PURPLE}* <${TM}>${NC}" 
+  echo -e "${PURPLE}*------------------------------------------------------------------${NC}"
 }
 
 function usage() {
@@ -61,8 +75,8 @@ function usage() {
 
   echo ""
   echo "Examples:"
-  echo "  1) build clean box:         $0 --clean"
-  echo "  2) build full-size cluster: $0 --size=full"
+  echo "  1) build clean box:             $0 --clean"
+  echo "  2) build minimal-size cluster:  $0 --size=mini"
 
   echo ""
   echo "Options:"
@@ -71,7 +85,7 @@ function usage() {
   echo "  -i, --interactive           Allow to ssh into box under building"
   echo "  -u, --upload                Upload box; please check vars.sh for where to upload"
   echo "  -v, --verbose               Make the operation more talkative"
-  echo "  -s, --size=[mini|mid|full]  Cluster size; default is 'mini'"
+  echo "  -s, --size=[mini|mid|full]  Cluster size; default is 'mid'"
   echo ""
 }
 
@@ -134,8 +148,7 @@ esac
 # end -------------------------------------------------------------------------
 
 # print the options 
-log_info "---------------------------------------------------------------------"
-log_info "Option values:"
+log_block "Option values:"
 
 log_info "\t  clean:" $opt_clean
 export opt_clean
@@ -157,9 +170,6 @@ fi
 
 log_info "\t  size:" $opt_size
 export opt_size
-
-log_info "---------------------------------------------------------------------"
-
 
 if [ -z $script_dir ]; then
   script_dir=$(cd "./script";pwd)
@@ -197,7 +207,7 @@ function import_raw_box() {
 
         if [ ${opt_clean} == "true" ]; then
             log_info "option 'clean' is 'true', so remove the existing box: ${box_name_fq}"            
-            vagrant box remove "${box_name_fq}"
+            vagrant box remove --force "${box_name_fq}"
 
             download_box ${org_name} ${box_name}
         fi
@@ -227,8 +237,7 @@ function import_box() {
     local box_name=$1
     local box_name_fq="${org}/${box_name}"
 
-    log_info "*********************************************************************************************************"
-    log_info "importing box: " $box_name_fq
+    log_block "importing box: $box_name_fq"
 
     import_raw_box ${org} ${box_name} ${clean}
 }
@@ -240,8 +249,7 @@ function build_box() {
     local box_name=$1
     local box_name_fq="${org}/${box_name}"
     
-    log_info "*********************************************************************************************************"
-    log_info "building box: " $box_name_fq
+    log_block "building box: " $box_name_fq
 
     local box_file="${box_name}.box"
 

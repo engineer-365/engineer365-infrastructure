@@ -24,7 +24,13 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-puts "Vagrantfile variables ---------------------------------------------------"
+puts "Vagrantfile variables:"
+
+opt_size=ENV["opt_size"]
+puts "opt_size: #{opt_size}"
+
+opt_verbose=ENV["opt_verbose"]
+puts "opt_verbose: #{opt_verbose}"
 
 org=ENV["org"]
 puts "org: #{org}"
@@ -38,8 +44,6 @@ puts "base box: #{base_box_name_fq}"
 
 ip=ENV["store4_ip"]
 puts "ip: #{ip}"
-
-puts "Vagrantfile variables ---------------------------------------------------"
 
 
 Vagrant.configure("2") do |config|

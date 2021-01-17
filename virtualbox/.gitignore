@@ -3,3 +3,4 @@
 *.box 
 *.box.counter
 *.log
+nohup.out

@@ -24,14 +24,22 @@
 #  SOFTWARE.
 
 set -e
-set -x
 
-echo "192.168.50.151  k8s-master1" >> /etc/hosts
+
+if [ ${opt_verbose} == "true" ]; then
+  set -x
+else
+  set +x
+fi
+
+#echo "192.168.50.151  k8s-master1" >> /etc/hosts
 
 # https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init
+log_block "init k8s using kubeadm"
 kubeadm init --config=kubeadm-config.yaml --upload-certs
 
-# generate join command and save it for other nodes to get
+log_info "generate join command and save it for other nodes to get"
+log_info "join command is saved as /home/admin/kubeadm_join_command.sh"
 kubeadm token create --print-join-command >> /home/admin/kubeadm_join_command.sh
 chown -R admin:admin /home/admin/kubeadm_join_command.sh
 
@@ -41,29 +49,35 @@ chown -R admin:admin /home/admin/kubeadm_join_command.sh
 # docker ps -a | grep kube | grep -v pause
 # docker logs CONTAINERID
 
+log_info "enable root user to access k8s cluster as administrator"
 mkdir -p /root/.kube
 cp -i /etc/kubernetes/admin.conf /root/.kube/config
 
-mkdir -p /home/admin/.kube
-cp -i /etc/kubernetes/admin.conf /home/admin/.kube/config
-chown $(id admin -u):$(id admin -g) /home/admin/.kube/config
+log_info "enable ${admin_user} user to access k8s cluster as administrator"
+mkdir -p /home/${admin_user}/.kube
+cp -i /etc/kubernetes/admin.conf /home/${admin_user}/.kube/config
+chown $(id ${admin_user} -u):$(id ${admin_user} -g) /home/${admin_user}/.kube/config
 
 # install calico CNI addon following https://docs.projectcalico.org/getting-started/kubernetes/
 # references:
 # - https://kubernetes.io/docs/concepts/policy/pod-security-policy/
 
 # TODO: loop to query the ready status
+log_info "sleep 60 seconds to wait for k8s initializtion"
 sleep 60
 
-kubectl create -f /home/vagrant/files/calico/3.17.1/calico.yaml
+log_block "deploy calico ${CALICO_VER}"
+kubectl create -f /home/vagrant/files/calico/${CALICO_VER}/calico.yaml
 # or
-# kubectl create -f /home/vagrant/files/calico/3.17.1/tigera-operator.yaml
-# kubectl create -f /home/vagrant/files/calico/3.17.1/custom-resources.yaml
+# kubectl create -f /home/vagrant/files/calico/${CALICO_VER}/tigera-operator.yaml
+# kubectl create -f /home/vagrant/files/calico/${CALICO_VER}/custom-resources.yaml
 
 # wait for ready?
 # TODO: loop to query the ready status
+log_info "sleep 60 seconds to wait for k8s master node be ready"
 sleep 60
 
+log_info "kube-system pods"
 kubectl get pods -n kube-system
 
 # then run `vagrant ssh -c "sudo kubeadm token create --print-join-command"` to get join command

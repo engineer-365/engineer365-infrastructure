@@ -24,12 +24,20 @@
 #  SOFTWARE.
 
 set -e
-set -x
+
+
+if [ ${opt_verbose} == "true" ]; then
+  set -x
+else
+  set +x
+fi
 
 cp -r /home/vagrant/files/opt/* /opt/
 
+log_block "launch mysql-master"
 cd /opt/mysql-master
 docker-compose up -d --remove-orphans
 
+log_block "launch gitlab"
 cd /opt/gitlab
 docker-compose up -d --remove-orphans
