@@ -25,8 +25,8 @@
 
 set -x
 
-export readonly this_dir=$(cd "$(dirname $0)";pwd)
-readonly script_dir=$(cd "${this_dir}/script";pwd)
+export this_dir=$(cd "$(dirname $0)";pwd)
+script_dir=$(cd "${this_dir}/script";pwd)
 source $script_dir/boxes.sh
 
 import_box ${box_name____org_builder1}

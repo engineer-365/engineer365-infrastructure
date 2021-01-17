@@ -23,7 +23,7 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-readonly this_dir=$(cd "$(dirname $0)";pwd)
+this_dir=$(cd "$(dirname $0)";pwd)
 
 echo "This script will checkout a new branch then replace example organzation with yours"
 

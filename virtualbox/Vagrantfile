@@ -24,7 +24,13 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-puts "Vagrantfile variables ---------------------------------------------------"
+puts "Vagrantfile variables:"
+
+opt_size=ENV["opt_size"]
+puts "opt_size: #{opt_size}"
+
+opt_verbose=ENV["opt_verbose"]
+puts "opt_verbose: #{opt_verbose}"
 
 org=ENV["org"]
 puts "org: #{org}"
@@ -97,7 +103,6 @@ virtual_machines = [
 
 puts "virtual_machines: #{virtual_machines}"
 
-puts "Vagrantfile variables ---------------------------------------------------"
 
 # This script to install k8s using kubeadm will get executed after a box is provisioned
 $k8sNodeProvisionScript = <<-SCRIPT

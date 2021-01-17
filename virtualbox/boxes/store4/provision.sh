@@ -24,7 +24,13 @@
 #  SOFTWARE.
 
 set -e
-set -x
+
+
+if [ ${opt_verbose} == "true" ]; then
+  set -x
+else
+  set +x
+fi
 
 cd /tmp
 
@@ -32,14 +38,19 @@ cd /tmp
 # https://github.com/goharbor/harbor
 # https://goharbor.io/docs/2.0.0/install-config/
 HARBOR_VER=2.1.2
+log_block "install harbor ${HARBOR_VER}"
+
 HARBOR_INSTALLER=harbor-offline-installer-v${HARBOR_VER}.tgz
 
 # https://github.com/goharbor/harbor/releases/download/v2.1.2/harbor-offline-installer-v2.1.2.tgz.asc
 
+log_info "download harbor installer ${download_site}/harbor/${HARBOR_VER}/${HARBOR_INSTALLER}"
 wget --quiet "${download_site}/harbor/${HARBOR_VER}/${HARBOR_INSTALLER}"
 tar -C /opt/ -xzf ${HARBOR_INSTALLER}
 cd /opt/harbor
+log_info "harbor is installed in /opt/harbor"
 
+log_block "set up harbor"
 mv /home/vagrant/files/harbor/harbor.yml ./
 
 # Default installation without Notary, Clair, or Chart Repository Service
