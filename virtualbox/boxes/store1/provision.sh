@@ -32,6 +32,8 @@ else
   set +x
 fi
 
+source /etc/profile
+
 cp -r /home/vagrant/files/opt/* /opt/
 
 log_block "launch mysql-master"

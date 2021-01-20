@@ -44,7 +44,9 @@ else
   set +x
 fi
 
-cat > /etc/profile <<EOF
+source /etc/profile
+
+cat >> /etc/profile <<EOF
 export LC_ALL=en_US.UTF-8
 
 
@@ -55,13 +57,13 @@ export NC='\033[0m'
 function log_info() {
   local TM=\`date "+%Y-%m-%d %H:%M:%S"\`
 
-  echo -e \${PURPLE}<\${TM}>\${BLUE} \$*\${NC}
+  echo -e \${PURPLE}[\${TM}]\${BLUE} \$*\${NC}
 }
 
 function log_error() {
   local TM=\`date "+%Y-%m-%d %H:%M:%S"\`
 
-  echo -e \${PURPLE}<\${TM}> \$*\${NC}
+  echo -e \${PURPLE}[\${TM}] \$*\${NC}
 }
 
 function log_block() {
@@ -69,7 +71,7 @@ function log_block() {
 
   echo -e "\${PURPLE}*******************************************************************\${NC}"
   echo -e "\${PURPLE}* \$*\${NC}"
-  echo -e "\${PURPLE}* <\${TM}>\${NC}" 
+  echo -e "\${PURPLE}* [\${TM}]\${NC}"
   echo -e "\${PURPLE}*------------------------------------------------------------------\${NC}"
 }
 
@@ -176,7 +178,7 @@ dpkg -i ${DOCKER_DEB}
 
 rm ${DOCKER_DEB}
 
-log_box "install docker-compose"
+log_block "install docker-compose"
 
 # https://github.com/docker/compose/releases/download/1.27.4/docker-compose-Linux-x86_64
 DOCKER_COMPOSE_BINARY=docker-compose-Linux-x86_64-1.27.4
@@ -189,7 +191,7 @@ log_info "restart docker"
 systemctl daemon-reload
 systemctl restart docker
 
-log_box "set up users: ${admin_user}, ${dev_user}"
+log_block "set up users: ${admin_user}, ${dev_user}"
 
 log_info "add group: ${org}"
 groupadd ${org}

@@ -32,6 +32,8 @@ else
   set +x
 fi
 
+source /etc/profile
+
 #echo "192.168.50.151  k8s-master1" >> /etc/hosts
 
 # https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init

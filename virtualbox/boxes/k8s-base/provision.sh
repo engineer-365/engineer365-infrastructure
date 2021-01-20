@@ -34,11 +34,13 @@ else
   set +x
 fi
 
+source /etc/profile
+
 k8s_gpg=$1
 k8s_apt=$2
 k8s_images_registry=$3
 
-cat > /etc/profile <<EOF
+cat >> /etc/profile <<EOF
 
 export k8s_gpg=${k8s_gpg}
 export k8s_apt=${k8s_apt}
@@ -137,7 +139,7 @@ sysctl --system
 # kubectl: the command line util to talk to your cluster.
 
 log_info "add k8s gpg: ${k8s_gpg}"
-curl -s ￥{k8s_gpg} | apt-key add -
+curl -s ${k8s_gpg} | apt-key add -
 
 #cat <<EOF | tee /etc/apt/sources.list.d/kubernetes.list
 #deb https://apt.kubernetes.io/ kubernetes-xenial main

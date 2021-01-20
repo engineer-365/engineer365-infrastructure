@@ -46,7 +46,7 @@ function log_info() {
   NC='\033[0m'
   local TM=`date "+%Y-%m-%d %H:%M:%S"`
 
-  echo -e "${PURPLE}<${TM}>${BLUE} $*${NC}"
+  echo -e "${PURPLE}[${TM}]${BLUE} $*${NC}"
 }
 
 function log_error() {
@@ -54,7 +54,7 @@ function log_error() {
   NC='\033[0m'
   local TM=`date "+%Y-%m-%d %H:%M:%S"`
 
-  echo -e "${PURPLE}<${TM}> $*${NC}"
+  echo -e "${PURPLE}[${TM}] $*${NC}"
 }
 
 function log_block() {
@@ -64,7 +64,7 @@ function log_block() {
 
   echo -e "${PURPLE}*******************************************************************${NC}"
   echo -e "${PURPLE}* $*${NC}"
-  echo -e "${PURPLE}* <${TM}>${NC}" 
+  echo -e "${PURPLE}* [${TM}]${NC}"
   echo -e "${PURPLE}*------------------------------------------------------------------${NC}"
 }
 
@@ -92,23 +92,23 @@ function usage() {
 while true
 do
   case "$1" in
-    -c|--clean) 
+    -c|--clean)
       opt_clean='true'
       shift
       ;;
-    -h|--help) 
+    -h|--help)
       usage
       exit 0
       ;;
-    -i|--interactive) 
+    -i|--interactive)
       opt_interactive='true'
       shift
       ;;
-    -u|--upload) 
+    -u|--upload)
       opt_upload='true'
       shift
       ;;
-    -v|--verbose) 
+    -v|--verbose)
       opt_verbose='true'
       shift
       ;;
@@ -116,7 +116,7 @@ do
       case "$2" in
         "")
           opt_size='mini'
-          shift 2  
+          shift 2
           ;;
         *)
           opt_size="$2"
@@ -147,7 +147,7 @@ case "${opt_size}" in
 esac
 # end -------------------------------------------------------------------------
 
-# print the options 
+# print the options
 log_block "Option values:"
 
 log_info "\t  clean:" $opt_clean
@@ -206,7 +206,7 @@ function import_raw_box() {
         log_info "box ${box_name_fq} exists already"
 
         if [ ${opt_clean} == "true" ]; then
-            log_info "option 'clean' is 'true', so remove the existing box: ${box_name_fq}"            
+            log_info "option 'clean' is 'true', so remove the existing box: ${box_name_fq}"
             vagrant box remove --force "${box_name_fq}"
 
             download_box ${org_name} ${box_name}
@@ -221,10 +221,10 @@ function download_box() {
     local org_name=$1
     local box_name=$2
     local box_name_fq="${org_name}/${box_name}"
-    
+
     local box_file="${box_name}.box"
     rm -f ${box_file}
-    
+
     local download_path="${box_download_path}/${org_name}/${box_file}"
     log_info "downloading box ${box_name_fq} from ${download_path}"
     wget --quiet "${download_path}"
@@ -248,14 +248,14 @@ function build_box() {
 
     local box_name=$1
     local box_name_fq="${org}/${box_name}"
-    
+
     log_block "building box: " $box_name_fq
 
     local box_file="${box_name}.box"
 
     vagrant halt
     vagrant destroy --force
-  
+
     vagrant up
 
     if [ ${opt_interactive} == "true" ]; then

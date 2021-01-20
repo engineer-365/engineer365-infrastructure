@@ -32,11 +32,13 @@ else
   set +x
 fi
 
+source /etc/profile
+
 k8s_gpg=$1
 k8s_apt=$2
 GOPROXY=$3
 
-cat > /etc/profile <<EOF
+cat >> /etc/profile <<EOF
 
 export k8s_gpg=${k8s_gpg}
 export k8s_apt=${k8s_apt}
@@ -45,7 +47,6 @@ EOF
 
 log_info "etc/profile:"
 source /etc/profile
-cat /etc/profile
 
 #docker pull --quiet jenkinsci/blueocean:1.24.3
 #docker pull --quiet nginx:1.19.5
@@ -89,7 +90,7 @@ wget --quiet "${download_site}/golang/${GO_VER}/${GO_TGZ}"
 tar -C /usr/local/ -xzf ${GO_TGZ}
 
 # TODO: take GOPROXY be optional
-cat > /etc/profile <<EOF
+cat >> /etc/profile <<EOF
 
 export GOPROXY=\${GOPROXY}
 export GOPATH=\$HOME/go
@@ -122,7 +123,7 @@ log_info "jdk-11 is installed to  /opt/jdk-${JDK11_VER}, and linked as /opt/jdk-
 
 log_info "set JAVA_HOME to /opt/jdk-11"
 
-cat > /etc/profile <<EOF
+cat >> /etc/profile <<EOF
 
 export JAVA_HOME=/opt/jdk-11
 export PATH=\$JAVA_HOME/bin:\$PATH
@@ -165,7 +166,7 @@ log_info "maven is installed to /opt/apache-maven-${MAVEN_VER}, and linked as /o
 
 log_info "set MAVEN_HOME_HOME to /opt/maven"
 
-cat > /etc/profile <<EOF
+cat >> /etc/profile <<EOF
 
 export MAVEN_HOME=/opt/maven
 export PATH=\$MAVEN_HOME/bin:\$PATH
@@ -192,7 +193,7 @@ log_info "jmeter is installed to /opt/apache-jmeter-${JMETER_VER}}, and linked a
 
 log_info "set JMETER_HOME to /opt/jmeter"
 
-cat > /etc/profile <<EOF
+cat >> /etc/profile <<EOF
 
 export JMETER_HOME=/opt/jmeter
 export PATH=\$JMETER_HOME/bin:\$PATH
@@ -219,7 +220,7 @@ log_info "node.js is installed to /usr/local/lib/node-v${NODEJS_VER}-linux-x64, 
 
 log_info "add /usr/local/lib/node.js/ to PATH"
 
-cat > /etc/profile <<EOF
+cat >> /etc/profile <<EOF
 
 export PATH=/usr/local/lib/node.js/bin:\$PATH
 
@@ -245,7 +246,7 @@ log_info "gradle is installed to /opt/gradle-${GRADLE_VER}, and linked as /opt/g
 
 log_info "set GRADLE_HOME to /opt/gradle"
 
-cat > /etc/profile <<EOF
+cat >> /etc/profile <<EOF
 
 export GRADLE_HOME=/opt/gradle
 export PATH=\$GRADLE_HOME/bin:\$PATH

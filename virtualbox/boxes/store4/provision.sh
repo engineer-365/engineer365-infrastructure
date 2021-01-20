@@ -32,6 +32,8 @@ else
   set +x
 fi
 
+source /etc/profile
+
 cd /tmp
 
 # offline install harbor#######################################################

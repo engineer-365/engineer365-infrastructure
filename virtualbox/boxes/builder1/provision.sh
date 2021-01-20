@@ -32,6 +32,8 @@ else
   set +x
 fi
 
+source /etc/profile
+
 jenkins_uc_download=$1
 maven_public_mirror=$2
 
@@ -54,7 +56,7 @@ sleep 180
 JENKINS_VER="2.269"
 JENKINS_PLUGIN_MGR_VER="2.5.0"
 
-cat > /etc/profile <<EOF
+cat >> /etc/profile <<EOF
 
 export JENKINS_VER=${JENKINS_VER}
 export JENKINS_PLUGIN_MGR_VER=${JENKINS_PLUGIN_MGR_VER}
@@ -120,7 +122,7 @@ ln -s /root/jenkins-tool/jenkins-plugin-manager-${JENKINS_PLUGIN_MGR_VER}.jar /r
 # optional - useful for jenkins adminstration work later
 # wget --quiet ${JENKINS_URL}/jnlpJars/jenkins-cli.jar
 
-## uncomment below lines to install plugin by yourself 
+## uncomment below lines to install plugin by yourself
 ## begin -----------------------------------------------------------------------
 ## see https://github.com/jenkinsci/plugin-installation-manager-tool
 ## download plugin to /usr/share/jenkins/ref/plugins
@@ -137,7 +139,7 @@ ln -s /root/jenkins-tool/jenkins-plugin-manager-${JENKINS_PLUGIN_MGR_VER}.jar /r
 
 
 
-# comment below lines to install plugin by yourself 
+# comment below lines to install plugin by yourself
 # begin -----------------------------------------------------------------------
 # see https://github.com/jenkinsci/plugin-installation-manager-tool
 log_info "download jenkins plugin descriptor from ${download_site}/jenkins to /root/.cache/jenkins-plugin-management-cli/"
