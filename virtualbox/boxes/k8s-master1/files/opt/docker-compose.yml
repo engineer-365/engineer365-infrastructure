@@ -32,7 +32,7 @@ services:
 
   server:
     container_name: fleashop-server
-    image: docker.engineer365.org:40444/engineer365/fleashop:latest
+    image: docker.example.com:40243/engineer365/fleashop:latest
     restart: always
     env_file: ./fleashop.env
     ports:
@@ -40,4 +40,4 @@ services:
       - 28081:8081
       - 127.0.0.1:28888:8888
     extra_hosts:
-      - "mysql.fleashop.engineer365.org:192.168.50.21"
+      - "mysql.fleashop.example.com:192.168.50.21"

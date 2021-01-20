@@ -169,7 +169,8 @@
    source /etc/profile
    ```
 
-  - vagrant-vbguest(0.28.0)是一个vagrant插件，用于安装VirtualBox Guest扩展
+
+  - vagrant-vbguest(0.29.0)是一个vagrant插件，用于安装VirtualBox Guest扩展
   ```shell
   vagrant plugin install vagrant-vbguest
   ```
@@ -193,14 +194,14 @@
     apt-mark hold kubectl
     ```
 
-    另外，包括Windows和Mac在内，都需要把`192.168.50.151 k8s-master1.engineer365.org`加入/etc/hosts：
+    另外，包括Windows和Mac在内，都需要把`192.168.50.151 k8s-master1.example.com`加入/etc/hosts：
     ```shell
-    echo "192.168.50.151    k8s-master1.engineer365.org" >> /etc/hosts
-    echo "192.168.50.171    k8s-node1.engineer365.org" >> /etc/hosts
-    echo "192.168.50.172    k8s-node2.engineer365.org" >> /etc/hosts
-    echo "192.168.50.173    k8s-node3.engineer365.org" >> /etc/hosts
-    echo "192.168.50.174    k8s-node4.engineer365.org" >> /etc/hosts
-    echo "192.168.50.175    k8s-node5.engineer365.org" >> /etc/hosts
+    echo "192.168.50.151    k8s-master1.example.com" >> /etc/hosts
+    echo "192.168.50.171    k8s-node1.example.com" >> /etc/hosts
+    echo "192.168.50.172    k8s-node2.example.com" >> /etc/hosts
+    echo "192.168.50.173    k8s-node3.example.com" >> /etc/hosts
+    echo "192.168.50.174    k8s-node4.example.com" >> /etc/hosts
+    echo "192.168.50.175    k8s-node5.example.com" >> /etc/hosts
     ```
 
   ### 3. 启动虚拟机

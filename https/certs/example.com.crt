@@ -1,0 +1,76 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 1 (0x1)
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=US, ST=Texas, L=Austin, O=example-org, OU=Certification Services Division, CN=My Root CA
+        Validity
+            Not Before: Jan 15 15:58:08 2021 GMT
+            Not After : Jan 15 15:58:08 2023 GMT
+        Subject: C=US, ST=Texas, L=Austin, O=example-org, OU=Secure Server, CN=example.com
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                RSA Public-Key: (2048 bit)
+                Modulus:
+                    00:bc:59:34:f1:32:f8:e6:53:39:84:0a:6e:fd:8c:
+                    43:03:cb:88:5a:fa:c2:a9:e7:b8:a4:2b:48:e3:d5:
+                    e1:63:b1:75:77:73:5f:8c:6f:b3:ab:79:ea:b8:0c:
+                    02:d3:ed:e7:30:eb:c1:2f:e4:c9:c1:ab:4b:42:88:
+                    15:20:f1:09:c6:f3:2e:cd:98:0d:ad:d8:e7:d1:29:
+                    84:bf:2d:1d:75:bb:93:35:a2:ea:ae:9b:13:c0:ae:
+                    f3:72:99:39:65:ae:f4:55:f3:9a:5f:13:59:1f:16:
+                    ca:27:0e:be:23:6a:43:fd:74:94:92:7c:8c:6b:e7:
+                    b5:10:d2:70:9f:49:5e:67:c4:53:29:2f:23:e3:c4:
+                    2f:a5:3d:23:45:0b:e0:79:9c:11:4c:f1:51:d5:7f:
+                    49:31:22:a4:d5:b3:e9:25:85:df:d0:72:69:f3:27:
+                    86:fb:5a:d3:ad:e9:ec:19:43:20:26:dd:51:ed:96:
+                    e6:e4:01:4f:4c:41:b0:24:45:dd:f9:d6:a2:1a:79:
+                    66:e1:54:0b:52:67:16:20:50:e9:bf:59:c4:44:52:
+                    60:06:a0:84:ef:c3:4c:04:fc:17:b8:b5:0e:75:0d:
+                    ed:a7:84:f7:99:ca:c6:da:4a:15:a1:9c:42:61:97:
+                    7b:7c:a5:d1:f3:8f:a6:04:63:d1:d6:10:58:72:48:
+                    eb:57
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Extended Key Usage: 
+                TLS Web Server Authentication, TLS Web Client Authentication
+            X509v3 Subject Alternative Name: 
+                DNS:example.com, DNS:*.example.com
+    Signature Algorithm: sha256WithRSAEncryption
+         28:e7:25:61:4c:55:88:9f:33:ce:85:9e:0e:a8:b4:99:e5:9c:
+         21:2b:4c:02:68:8f:7a:a0:d4:ca:ee:f2:c5:06:61:41:d7:58:
+         88:b8:5a:4d:28:c7:fd:a9:7d:fe:85:ce:d0:bb:e5:9f:9c:7c:
+         8a:52:82:0a:a5:40:d3:2e:ef:5e:50:5c:80:43:c3:43:a9:97:
+         30:64:5a:4a:9e:ff:f8:0f:3a:fe:62:71:92:c6:e7:92:56:79:
+         f4:5b:79:ef:cd:0e:d2:81:0b:be:fe:8a:4e:7f:52:8d:c0:2e:
+         1c:6e:32:a0:17:58:c6:2a:4d:ed:77:e0:bf:53:a7:5d:8f:fe:
+         f7:93:a0:ec:1a:f4:30:3c:d6:e2:a2:b6:07:cf:ab:76:53:55:
+         3e:a0:f7:38:1b:85:8e:a1:98:b9:33:27:73:c6:7b:ae:b8:21:
+         d6:5d:6a:14:dc:3c:5f:0a:92:64:96:e6:c2:50:49:a0:8a:bc:
+         f8:06:37:8c:d5:b7:b2:98:c3:c4:d3:a6:0d:53:d7:61:fd:1e:
+         44:59:25:25:43:59:a0:3f:94:98:61:f1:3c:b9:d5:72:da:ae:
+         87:ea:1b:29:01:e6:f6:6e:5f:2c:df:7c:9b:38:db:86:c4:07:
+         d3:e4:4a:b2:9a:6b:b3:4a:8f:4f:7f:3b:fc:8e:79:dd:87:c0:
+         51:6c:0c:e8
+-----BEGIN CERTIFICATE-----
+MIIDuTCCAqGgAwIBAgIBATANBgkqhkiG9w0BAQsFADCBgzELMAkGA1UEBhMCVVMx
+DjAMBgNVBAgTBVRleGFzMQ8wDQYDVQQHEwZBdXN0aW4xFDASBgNVBAoTC2V4YW1w
+bGUtb3JnMSgwJgYDVQQLEx9DZXJ0aWZpY2F0aW9uIFNlcnZpY2VzIERpdmlzaW9u
+MRMwEQYDVQQDEwpNeSBSb290IENBMB4XDTIxMDExNTE1NTgwOFoXDTIzMDExNTE1
+NTgwOFowcjELMAkGA1UEBhMCVVMxDjAMBgNVBAgTBVRleGFzMQ8wDQYDVQQHEwZB
+dXN0aW4xFDASBgNVBAoTC2V4YW1wbGUtb3JnMRYwFAYDVQQLEw1TZWN1cmUgU2Vy
+dmVyMRQwEgYDVQQDEwtleGFtcGxlLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEP
+ADCCAQoCggEBALxZNPEy+OZTOYQKbv2MQwPLiFr6wqnnuKQrSOPV4WOxdXdzX4xv
+s6t56rgMAtPt5zDrwS/kycGrS0KIFSDxCcbzLs2YDa3Y59EphL8tHXW7kzWi6q6b
+E8Cu83KZOWWu9FXzml8TWR8WyicOviNqQ/10lJJ8jGvntRDScJ9JXmfEUykvI+PE
+L6U9I0UL4HmcEUzxUdV/STEipNWz6SWF39ByafMnhvta063p7BlDICbdUe2W5uQB
+T0xBsCRF3fnWohp5ZuFUC1JnFiBQ6b9ZxERSYAaghO/DTAT8F7i1DnUN7aeE95nK
+xtpKFaGcQmGXe3yl0fOPpgRj0dYQWHJI61cCAwEAAaNIMEYwHQYDVR0lBBYwFAYI
+KwYBBQUHAwEGCCsGAQUFBwMCMCUGA1UdEQQeMByCC2V4YW1wbGUuY29tgg0qLmV4
+YW1wbGUuY29tMA0GCSqGSIb3DQEBCwUAA4IBAQAo5yVhTFWInzPOhZ4OqLSZ5Zwh
+K0wCaI96oNTK7vLFBmFB11iIuFpNKMf9qX3+hc7Qu+WfnHyKUoIKpUDTLu9eUFyA
+Q8NDqZcwZFpKnv/4Dzr+YnGSxueSVnn0W3nvzQ7SgQu+/opOf1KNwC4cbjKgF1jG
+Kk3td+C/U6ddj/73k6DsGvQwPNbiorYHz6t2U1U+oPc4G4WOoZi5MydzxnuuuCHW
+XWoU3DxfCpJklubCUEmgirz4BjeM1beymMPE06YNU9dh/R5EWSUlQ1mgP5SYYfE8
+udVy2q6H6hspAeb2bl8s33ybONuGxAfT5EqymmuzSo9Pfzv8jnndh8BRbAzo
+-----END CERTIFICATE-----

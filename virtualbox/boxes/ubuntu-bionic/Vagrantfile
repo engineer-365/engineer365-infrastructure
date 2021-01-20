@@ -24,7 +24,19 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-puts "Vagrantfile variables ---------------------------------------------------"
+puts "Vagrantfile variables:"
+
+opt_size=ENV["opt_size"]
+puts "opt_size: #{opt_size}"
+
+opt_verbose=ENV["opt_verbose"]
+puts "opt_verbose: #{opt_verbose}"
+
+ubuntu_mirror=ENV["ubuntu_mirror"]
+puts "ubuntu_mirror: #{ubuntu_mirror}"
+
+timezone=ENV["timezone"]
+puts "timezone:#{timezone}"
 
 org=ENV["org"]
 puts "org: #{org}"
@@ -42,12 +54,17 @@ puts "admin_user: #{admin_user}"
 dev_user=ENV["dev_user"]
 puts "dev_user: #{dev_user}"
 
+docker_mirror_1=ENV["docker_mirror_1"]
+puts "docker_mirror_1: #{docker_mirror_1}"
+
+docker_mirror_2=ENV["docker_mirror_2"]
+puts "docker_mirror_2: #{docker_mirror_2}"
+
 base_box_name=ENV["box_name____hashicorp_ubuntu_bionic"]
 base_box_name_fq="hashicorp/#{base_box_name}"
 puts "base box: #{base_box_name_fq}"
 
 
-puts "Vagrantfile variables ---------------------------------------------------"
 
 
 Vagrant.configure("2") do |config|
@@ -67,12 +84,20 @@ Vagrant.configure("2") do |config|
     
     p.check_guest_additions = false
     
-    p.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
-    #p.customize ["storagectl", :id, "--name", "SATA Controller", "--add", "sata", "--controller", "IntelAHCI"]
-
-    # Customize the amount of memory on the VM:
-    p.memory = "4096"
-    p.cpus = 2
+    if opt_size == "mini"
+      p.customize ["modifyvm", :id, "--cpuexecutioncap", "30"]
+      p.memory = "4096"
+      p.cpus = 1
+    elsif opt_size == "full"
+      p.customize ["modifyvm", :id, "--cpuexecutioncap", "20"]
+      p.memory = "8192"
+      p.cpus = 2
+    else
+      p.customize ["modifyvm", :id, "--cpuexecutioncap", "20"]
+      p.memory = "8192"
+      p.cpus = 2
+    end   
+    
   end
 
   config.disksize.size = '30GB'
@@ -93,12 +118,13 @@ Vagrant.configure("2") do |config|
 
   ## we have no DNS server yet, so just hardcode the /etc/hosts ----------------
   config.vm.provision "file", source: "../../etc_hosts", destination: "/home/vagrant/"
+  config.vm.provision "file", source: "../../../https/certs", destination: "/home/vagrant/certs"
   config.vm.provision "shell", inline: "mv /home/vagrant/etc_hosts /etc/hosts"
   
   # Enable provisioning with a shell script. 
   config.vm.provision "shell" do |s|
     s.path = "provision.sh"
-    s.args = "\"#{download_site}\" \"#{org}\" \"#{admin_user}\" \"#{dev_user}\""
+    s.args = "\"#{download_site}\" \"#{org}\" \"#{admin_user}\" \"#{dev_user}\" \"#{opt_size}\" \"#{opt_verbose}\" \"#{ubuntu_mirror}\" \"#{timezone}\" \"#{docker_mirror_1}\" \"#{docker_mirror_2}\" "
   end
 
 end

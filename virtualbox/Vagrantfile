@@ -1,0 +1,143 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+#
+#  MIT License
+#
+#  Copyright (c) 2020 engineer365.org
+#
+#  Permission is hereby granted, free of charge, to any person obtaining a copy
+#  of this software and associated documentation files (the "Software"), to deal
+#  in the Software without restriction, including without limitation the rights
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#  copies of the Software, and to permit persons to whom the Software is
+#  furnished to do so, subject to the following conditions:
+#
+#  The above copyright notice and this permission notice shall be included in all
+#  copies or substantial portions of the Software.
+#
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#  SOFTWARE.
+
+puts "Vagrantfile variables:"
+
+opt_size=ENV["opt_size"]
+puts "opt_size: #{opt_size}"
+
+opt_verbose=ENV["opt_verbose"]
+puts "opt_verbose: #{opt_verbose}"
+
+org=ENV["org"]
+puts "org: #{org}"
+
+virtual_machines = [
+    {
+      :name => "builder1",
+      :host => ENV["builder1_host"],
+      :type => "builder",
+      :box => org + "/" + ENV["box_name____org_builder1"],
+      :ip => ENV["builder1_ip"]
+    },
+    {
+        :name => "k8s_master1",
+        :host => ENV["k8s_master1_host"],
+        :type => "k8s_master",
+        :box => org + "/" + ENV["box_name____org_k8s_master1"],
+        :ip => ENV["k8s_master1_ip"]
+    },
+    {
+        :name => "k8s_node1",
+        :host => ENV["k8s_node1_host"],
+        :type => "k8s_node",
+        :box => org + "/" + ENV["box_name____org_k8s_base"],
+        :ip => ENV["k8s_node1_ip"]
+    },
+    {
+        :name => "k8s_node2",
+        :host => ENV["k8s_node2_host"],
+        :type => "k8s_node",
+        :box => org + "/" + ENV["box_name____org_k8s_base"],
+        :ip => ENV["k8s_node2_ip"]
+    },
+    {
+        :name => "k8s_node3",
+        :host => ENV["k8s_node3_host"],
+        :type => "k8s_node",
+        :box => org + "/" + ENV["box_name____org_k8s_base"],
+        :ip => ENV["k8s_node3_ip"]
+    },
+    #{
+    #    :name => "k8s_node4",
+    #    :host => ENV["k8s_node4_host"],
+    #    :type => "k8s_node",
+    #    :box => org + "/" + ENV["box_name____org_k8s_base"],
+    #    :ip => ENV["k8s_node4_ip"]
+    #},
+    #{
+    #    :name => "k8s_node5",
+    #    :host => ENV["k8s_node5_host"],
+    #    :type => "k8s_node",
+    #    :box => org + "/" + ENV["box_name____org_k8s_base"],
+    #    :ip => ENV["k8s_node5_ip"]
+    #},
+    {
+        :name => "store1",
+        :host => ENV["store1_host"],
+        :type => "store",
+        :box => org + "/" + ENV["box_name____org_store1"],
+        :ip => ENV["store1_ip"]
+    },
+    {
+        :name => "store4",
+        :host => ENV["store4_host"],
+        :type => "store",
+        :box => org + "/" + ENV["box_name____org_store4"],
+        :ip => ENV["store4_ip"]
+    }
+]
+
+puts "virtual_machines: #{virtual_machines}"
+
+
+# This script to install k8s using kubeadm will get executed after a box is provisioned
+$k8sNodeProvisionScript = <<-SCRIPT
+set -e
+set -x
+
+JOIN_CMD=/home/admin/kubeadm_join_command.sh
+scp -i /home/admin/.ssh/id_rsa -o StrictHostKeyChecking=no admin@k8s-master1.example.com:${JOIN_CMD} ${JOIN_CMD}
+chmod u+x ${JOIN_CMD}
+sh ${JOIN_CMD}
+rm ${JOIN_CMD}
+SCRIPT
+
+
+Vagrant.configure("2") do |config|
+
+  virtual_machines.each do |virtual_machine|
+    config.vm.define virtual_machine[:name] do |config|
+      config.vm.box = virtual_machine[:box]
+      config.vm.hostname = virtual_machine[:host]
+      #config.vm.network "forwarded_port", guest: 80, host: 8080
+      config.vm.network "private_network", ip: virtual_machine[:ip], hostname: true
+
+      if virtual_machine[:type] == "builder1"
+        config.vm.network "forwarded_port", guest: 443, host: 443
+      end
+
+      config.vm.provider "virtualbox" do |p|
+        p.name = virtual_machine[:name]
+      end
+
+      if virtual_machine[:type] == "k8s_node"
+        config.vm.provision "shell", inline: $k8sNodeProvisionScript
+      end
+    end
+  end
+
+end

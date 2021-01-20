@@ -102,12 +102,13 @@ PREFIX=/$NAME
 
 # Allows tweaking the URL displayed at the bottom of Jenkins' UI
 # Default: https://jenkins.io
-FOOTER_URL=https://builder.engineer365.org:40443
+FOOTER_URL=https://builder.example.com:40043
 
 # Timezone: see https://www.jenkins.io/doc/book/managing/change-system-timezone/
 TIME_ZONE="-Dorg.apache.commons.jelly.tags.fmt.timeZone=Asia/Shanghai"
 
-JENKINS_UC_DOWNLOAD=https://mirrors.tuna.tsinghua.edu.cn/jenkins/
+# uncomment below line to set up update center mirror
+# JENKINS_UC_DOWNLOAD=https://mirrors.tuna.tsinghua.edu.cn/jenkins/
 
 JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT"
 

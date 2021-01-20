@@ -23,9 +23,164 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-set -x
+opt_clean='false'
+opt_interactive='false'
+opt_upload='false'
+opt_verbose='false'
+opt_size='mid'
 
-export readonly virtualbox_dir=$(dirname $script_dir)
+# parse options
+# begin -----------------------------------------------------------------------
+
+ARGS=`getopt -o chiuvs:: --long clean,help,interactive,upload,verbose,size:: -n "$0" -- "$@"`
+if [ $? != 0 ]; then
+  exit 1
+fi
+
+eval set -- "${ARGS}"
+
+
+function log_info() {
+  PURPLE='\033[1;35m'
+  BLUE='\033[1;34m'
+  NC='\033[0m'
+  local TM=`date "+%Y-%m-%d %H:%M:%S"`
+
+  echo -e "${PURPLE}[${TM}]${BLUE} $*${NC}"
+}
+
+function log_error() {
+  PURPLE='\033[1;35m'
+  NC='\033[0m'
+  local TM=`date "+%Y-%m-%d %H:%M:%S"`
+
+  echo -e "${PURPLE}[${TM}] $*${NC}"
+}
+
+function log_block() {
+  PURPLE='\033[1;35m'
+  NC='\033[0m'
+  local TM=`date "+%Y-%m-%d %H:%M:%S"`
+
+  echo -e "${PURPLE}*******************************************************************${NC}"
+  echo -e "${PURPLE}* $*${NC}"
+  echo -e "${PURPLE}* [${TM}]${NC}"
+  echo -e "${PURPLE}*------------------------------------------------------------------${NC}"
+}
+
+function usage() {
+  echo ""
+  echo "Usage:"
+  echo "  $0 [options]"
+
+  echo ""
+  echo "Examples:"
+  echo "  1) build clean box:             $0 --clean"
+  echo "  2) build minimal-size cluster:  $0 --size=mini"
+
+  echo ""
+  echo "Options:"
+  echo "  -c, --clean                 Clean exiting box"
+  echo "  -h, --help                  Display this help"
+  echo "  -i, --interactive           Allow to ssh into box under building"
+  echo "  -u, --upload                Upload box; please check vars.sh for where to upload"
+  echo "  -v, --verbose               Make the operation more talkative"
+  echo "  -s, --size=[mini|mid|full]  Cluster size; default is 'mid'"
+  echo ""
+}
+
+while true
+do
+  case "$1" in
+    -c|--clean)
+      opt_clean='true'
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    -i|--interactive)
+      opt_interactive='true'
+      shift
+      ;;
+    -u|--upload)
+      opt_upload='true'
+      shift
+      ;;
+    -v|--verbose)
+      opt_verbose='true'
+      shift
+      ;;
+    -s|--size)
+      case "$2" in
+        "")
+          opt_size='mini'
+          shift 2
+          ;;
+        *)
+          opt_size="$2"
+          shift 2;
+          ;;
+      esac
+      ;;
+    --)
+      shift
+      break
+      ;;
+    *)
+      log_error "Internal error!"
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+case "${opt_size}" in
+  "mini"|"mid"|"full")
+    ;;
+  *)
+    log_error "Invalid 'size' option value: '${opt_size}'. It must be 'mini', 'mid', or 'full'"
+    usage
+    exit 1
+    ;;
+esac
+# end -------------------------------------------------------------------------
+
+# print the options
+log_block "Option values:"
+
+log_info "\t  clean:" $opt_clean
+export opt_clean
+
+log_info "\t  interactive:" $opt_interactive
+export opt_interactive
+
+log_info "\t  upload:" $opt_upload
+export opt_upload
+
+log_info "\t  verbose:" $opt_verbose
+export opt_verbose
+
+if [ ${opt_verbose} == "true" ]; then
+  set -x
+else
+  set +x
+fi
+
+log_info "\t  size:" $opt_size
+export opt_size
+
+if [ -z $script_dir ]; then
+  script_dir=$(cd "./script";pwd)
+fi
+log_info "script directory::" $script_dir
+export script_dir
+
+export virtualbox_dir=$(dirname $script_dir)
+log_info "virtualbox directory::" $virtualbox_dir
+export virtualbox_dir
+
 
 source ${script_dir}/vars.sh
 source ${script_dir}/ip_and_host.sh
@@ -44,28 +199,47 @@ function import_raw_box() {
 
     vagrant box list | grep "${box_name_fq}" | wc -l > ${box_name}.box.counter
     if [ "$(cat ${box_name}.box.counter)" != '1' ]; then
-        echo "${box_name_fq} not found, importing ..."
-        
-        local box_file="${box_name}.box"
-        rm -f ${box_file}
+        log_info "box ${box_name_fq} not found, importing ..."
 
-        wget --quiet "${box_download_path}/${org_name}/${box_file}"
-
-        vagrant box add ${box_file} --name "${box_name_fq}" --force
-        rm ${box_file}
+        download_box ${org_name} ${box_name}
     else
-        echo "${box_name_fq} exists already"
+        log_info "box ${box_name_fq} exists already"
+
+        if [ ${opt_clean} == "true" ]; then
+            log_info "option 'clean' is 'true', so remove the existing box: ${box_name_fq}"
+            vagrant box remove --force "${box_name_fq}"
+
+            download_box ${org_name} ${box_name}
+        fi
     fi
 
     rm ${box_name}.box.counter
 }
 
 
+function download_box() {
+    local org_name=$1
+    local box_name=$2
+    local box_name_fq="${org_name}/${box_name}"
+
+    local box_file="${box_name}.box"
+    rm -f ${box_file}
+
+    local download_path="${box_download_path}/${org_name}/${box_file}"
+    log_info "downloading box ${box_name_fq} from ${download_path}"
+    wget --quiet "${download_path}"
+
+    vagrant box add ${box_file} --name "${box_name_fq}" --force
+    rm ${box_file}
+}
+
 function import_box() {
     local box_name=$1
     local box_name_fq="${org}/${box_name}"
 
-    import_raw_box ${org} ${box_name}
+    log_block "importing box: $box_name_fq"
+
+    import_raw_box ${org} ${box_name} ${clean}
 }
 
 
@@ -74,22 +248,33 @@ function build_box() {
 
     local box_name=$1
     local box_name_fq="${org}/${box_name}"
+
+    log_block "building box: " $box_name_fq
+
     local box_file="${box_name}.box"
 
+    vagrant halt
+    vagrant destroy --force
+
     vagrant up
+
+    if [ ${opt_interactive} == "true" ]; then
+      vagrant ssh
+    fi
 
     rm -f ${this_dir}/${box_file}
     vagrant package --output ${this_dir}/${box_file}
 
     vagrant box add ${this_dir}/${box_file} --name ${box_name_fq} --force
+
+    vagrant halt
     vagrant destroy --force
     rm -rf ${this_dir}/.vagrant
 
-    ## uncomment below code, change the 'upload_site_for_scp', if you want to
-    ## upload boxes somewhere
-
-    scp -P 30022 ${this_dir}/${box_file} ${upload_site_for_scp}/vagrant/box/${org}
-    rm -f ${this_dir}/${box_file}
+    if [ ${opt_clean} == "true" ]; then
+      log_info 'uploading box'
+      scp -P ${scp_upload_port} -o StrictHostKeyChecking=no ${this_dir}/${box_file} ${scp_upload_path}
+    fi
 }
 
 

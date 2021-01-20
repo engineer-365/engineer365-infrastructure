@@ -17,7 +17,7 @@
    打印出来的命令行类似：
 
    ```shell
-   kubeadm join k8s-master1.engineer365.org:6443 --token 9vwdca.2i6f5sm6kp4xamjk --discovery-token-ca-cert-hash sha256:27c5c00d373f4bf2bb9f2cdd49498b89b8ec4a98fcb5620d960d42998e1081e5
+   kubeadm join k8s-master1.example.com:6443 --token 9vwdca.2i6f5sm6kp4xamjk --discovery-token-ca-cert-hash sha256:27c5c00d373f4bf2bb9f2cdd49498b89b8ec4a98fcb5620d960d42998e1081e5
    ```
 
    把上面这个命令行在所有worker节点虚拟机里用root权限执行里执行。
